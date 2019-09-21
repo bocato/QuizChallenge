@@ -24,23 +24,25 @@ final class KeywordsBottomView: UIView, KeywordsBottomViewProtocol {
     private lazy var leftTextLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textAlignment = .left
+        label.text = "leftTextLabel" // TODO: Remove
         return label
     }()
     
     private lazy var rightTextLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textAlignment = .right
+        label.text = "rightTextLabel" // TODO: Remove
         return label
     }()
     
     private lazy var button: UIButton = {
         let button = UIButton(frame: .zero)
         button.titleLabel?.textColor = .white
-        button.titleLabel?.text = "Reset"
+        button.setTitle("Reset", for: .normal)
         button.backgroundColor = .quizOrange
         button.layer.masksToBounds = true
-        button.layer.cornerRadius = 5.0
-        button.anchor(heightConstant: Metrics.Height.button)
+        button.layer.cornerRadius = 12.0
+        button.anchor(heightConstant: Metrics.Height.fatButton)
         return button
     }()
     
@@ -92,6 +94,10 @@ final class KeywordsBottomView: UIView, KeywordsBottomViewProtocol {
     private func constrainContentStackView() {
         addSubview(contentStackView)
         contentStackView.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
             topConstant: Metrics.Margin.default,
             leftConstant: Metrics.Margin.default,
             bottomConstant: Metrics.Margin.default,

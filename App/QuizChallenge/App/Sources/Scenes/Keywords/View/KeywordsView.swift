@@ -25,6 +25,13 @@ final class KeywordsView: UIView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
+        label.numberOfLines = 0
+        label.text = """
+        Label Label Label Label Label Label Label Label
+        Label Label Label Label Label Label Label Label
+        Label Label Label Label Label Label Label Label
+        Label Label Label Label Label Label Label Label
+        """
         return label
     }()
     
@@ -79,7 +86,8 @@ final class KeywordsView: UIView {
     ) {
         self.refreshControllAction = refreshControllAction
         self.bottomViewButtonAction = bottomViewButtonAction
-        super.init(frame: .zero)
+        super.init(frame: UIScreen.main.bounds)
+        setup()
     }
     
     @available(*, unavailable)
@@ -90,7 +98,8 @@ final class KeywordsView: UIView {
     // MARK: - Setup
     
     private func setup() {
-        
+        backgroundColor = .white
+        addSubViews()
     }
     
     // MARK: - Layout
@@ -106,14 +115,17 @@ final class KeywordsView: UIView {
             left: leftAnchor,
             bottom: bottomAnchor,
             right: rightAnchor,
-            heightConstant: 150
+            heightConstant: 120
         )
     }
     
     private func constrainListContainerStackView() {
         addSubview(listContainerStackView)
         listContainerStackView.anchor(
+            top: topAnchor,
+            left: leftAnchor,
             bottom: _bottomView.topAnchor,
+            right: rightAnchor,
             topConstant: Metrics.Margin.default,
             leftConstant: Metrics.Margin.default,
             rightConstant: Metrics.Margin.default

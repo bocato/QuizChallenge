@@ -40,6 +40,8 @@ final class KeywordsViewController: UIViewController, CustomViewController {
         setupCustomView()
     }
     
+    // MARK: - Setup
+    
     private func setupCustomView () {
         
         let refreshControllAction: (() -> Void) = {
@@ -55,5 +57,9 @@ final class KeywordsViewController: UIViewController, CustomViewController {
             bottomViewButtonAction: bottomViewButtonAction
         )
     }
+    
+    // MARK: - Layout
+    
+    
 
 }

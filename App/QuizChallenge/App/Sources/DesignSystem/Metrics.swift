@@ -21,8 +21,12 @@ struct Metrics {
     
     struct Height {
         
-        static let button: CGFloat = 44.0
-        static let textField: CGFloat = 60.0
+        /// Default button height, 54 points
+        static let fatButton: CGFloat = 54.0
+        
+        
+        // Default TextField height, 60 points
+        static let textField: CGFloat = 54.0
     }
     
 }
