@@ -25,6 +25,7 @@ final class KeywordsView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 0
+        label.apply(typography: .largeTitle, with: .black)
         return label
     }()
     
@@ -48,6 +49,7 @@ final class KeywordsView: UIView {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .singleLine
         tableView.isHidden = true
+        tableView.register(QuizTableViewCell.self, forCellReuseIdentifier: QuizTableViewCell.className)
         
         return tableView
     }()
@@ -141,7 +143,7 @@ final class KeywordsView: UIView {
     
     // MARK: Public Functions
     
-    func setTitle(_ text: String) {
+    func setTitle(_ text: String?) {
         DispatchQueue.main.async {
             self.titleLabel.text = text
         }

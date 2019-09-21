@@ -9,8 +9,9 @@
 import UIKit
 
 protocol KeywordsBottomViewProtocol {
-    func setLeftText(_ text: String)
-    func setRightText(_ text: String)
+    func setButtonTitle(_ title: String?)
+    func setLeftText(_ text: String?)
+    func setRightText(_ text: String?)
 }
 
 final class KeywordsBottomView: UIView, KeywordsBottomViewProtocol {
@@ -38,11 +39,12 @@ final class KeywordsBottomView: UIView, KeywordsBottomViewProtocol {
     private lazy var button: UIButton = {
         let button = UIButton(frame: .zero)
         button.titleLabel?.textColor = .white
-        button.setTitle("Reset", for: .normal)
+        button.titleLabel?.apply(typography: .button, with: .white)
         button.backgroundColor = .quizOrange
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 12.0
         button.anchor(heightConstant: Metrics.Height.fatButton)
+        button.addTarget(self, action: #selector(buttonDidReceiveTouchUpInside), for: .touchUpInside)
         return button
     }()
     
@@ -108,12 +110,16 @@ final class KeywordsBottomView: UIView, KeywordsBottomViewProtocol {
     
     // MARK: - Public Methods
     
-    func setLeftText(_ text: String) {
+    func setLeftText(_ text: String?) {
         leftTextLabel.text = text
     }
     
-    func setRightText(_ text: String) {
+    func setRightText(_ text: String?) {
         rightTextLabel.text = text
+    }
+    
+    func setButtonTitle(_ title: String?) {
+        button.setTitle(title, for: .normal)
     }
     
     // MARK: - Actions

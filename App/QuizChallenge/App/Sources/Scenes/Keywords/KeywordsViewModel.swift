@@ -9,7 +9,8 @@
 import Foundation
 
 protocol KeywordsViewModelDelegate: ViewStateRendering, AnyObject {
-    func renderTitle(_ title: String)
+    func viewTitleDidChange(_ title: String?)
+    func bottomButtonTitleDidChange(_ title: String?)
 }
 
 final class KeywordsViewModel {
@@ -24,6 +25,17 @@ final class KeywordsViewModel {
     weak var delegate: KeywordsViewModelDelegate?
     
     // MARK: - Private Properties
+    
+    private var viewTitle: String? {
+        didSet {
+            delegate?.viewTitleDidChange(viewTitle)
+        }
+    }
+    private var bottomButtonTitle: String? {
+        didSet {
+            delegate?.bottomButtonTitleDidChange(bottomButtonTitle)
+        }
+    }
     
     private var answers = [QuizViewData.Item]()
     
@@ -47,6 +59,7 @@ final class KeywordsViewModel {
     // MARK: - Public Functions
     
     func onViewDidLoad() {
+        bottomButtonTitle = "Reset"
         loadQuizData()
     }
     
@@ -72,7 +85,7 @@ final class KeywordsViewModel {
     // MARK: - FetchQuizUseCase Handlers
     
     private func handleViewData(_ viewData: QuizViewData) {
-        delegate?.renderTitle(viewData.title)
+        viewTitle = viewData.title
         answers = viewData.items
         delegate?.render(.content)
     }

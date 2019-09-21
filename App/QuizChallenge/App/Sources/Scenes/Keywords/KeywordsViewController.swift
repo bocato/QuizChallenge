@@ -64,8 +64,17 @@ final class KeywordsViewController: UIViewController, CustomViewController {
 // MARK: - KeywordsViewModelDelegate
 extension KeywordsViewController: KeywordsViewModelDelegate {
     
-    func renderTitle(_ title: String) {
+    func viewTitleDidChange(_ title: String?) {
         customView.setTitle(title)
+    }
+    
+    func bottomButtonTitleDidChange(_ title: String?) {
+        customView.bottomView.setButtonTitle(title)
+    }
+    
+    
+    func renderTitle(_ title: String) {
+        
     }
     
     func render(_ state: ViewState) {
@@ -76,7 +85,7 @@ extension KeywordsViewController: KeywordsViewModelDelegate {
             customView.reloadTableView()
             customView.showTableView()
         case let .error(withFiller: filler):
-            debugPrint("render: \(filler)")
+            debugPrint("render: \(filler.debugDescription)")
         default:
             return
         }
@@ -92,9 +101,11 @@ extension KeywordsViewController: UITableViewDataSource {
     
     // TODO: Refactor
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: QuizTableViewCell.className, for: indexPath) as? QuizTableViewCell else {
+            return UITableViewCell()
+        }
         let answer = viewModel.answerItem(at: indexPath.row)
-        cell.textLabel?.text = answer.text
+        cell.configure(with: answer)
         return cell
     }
     

@@ -33,6 +33,13 @@
 		E57891BF2336945D00CB5849 /* QuizViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891BE2336945C00CB5849 /* QuizViewData.swift */; };
 		E57891C42336981000CB5849 /* ViewStateRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891C32336981000CB5849 /* ViewStateRendering.swift */; };
 		E57891C623369C5400CB5849 /* UseCaseEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891C523369C5300CB5849 /* UseCaseEvent.swift */; };
+		E57891E32336AB7400CB5849 /* QuizTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891E22336AB7400CB5849 /* QuizTableViewCell.swift */; };
+		E57891E72336AD3300CB5849 /* SF-Pro-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E57891E42336AD3300CB5849 /* SF-Pro-Display-Semibold.otf */; };
+		E57891E82336AD3300CB5849 /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E57891E52336AD3300CB5849 /* SF-Pro-Display-Bold.otf */; };
+		E57891E92336AD3300CB5849 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = E57891E62336AD3300CB5849 /* SF-Pro-Display-Regular.otf */; };
+		E57891ED2336AD6700CB5849 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891EC2336AD6700CB5849 /* Typography.swift */; };
+		E57891F02336AE0700CB5849 /* UIFont+Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891EF2336AE0700CB5849 /* UIFont+Quiz.swift */; };
+		E57891F42336B06900CB5849 /* UIKit+Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891F32336B06900CB5849 /* UIKit+Typography.swift */; };
 		E5CE4246233446D800295277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE4245233446D800295277 /* AppDelegate.swift */; };
 		E5CE424D233446D900295277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5CE424C233446D900295277 /* Assets.xcassets */; };
 		E5CE4250233446D900295277 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5CE424E233446D900295277 /* LaunchScreen.storyboard */; };
@@ -75,6 +82,13 @@
 		E57891BE2336945C00CB5849 /* QuizViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuizViewData.swift; path = ../../../../../../../../../../../Documents/QuizViewData.swift; sourceTree = "<group>"; };
 		E57891C32336981000CB5849 /* ViewStateRendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewStateRendering.swift; path = ../../../../../../../../../Documents/ViewStateRendering.swift; sourceTree = "<group>"; };
 		E57891C523369C5300CB5849 /* UseCaseEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseCaseEvent.swift; sourceTree = "<group>"; };
+		E57891E22336AB7400CB5849 /* QuizTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTableViewCell.swift; sourceTree = "<group>"; };
+		E57891E42336AD3300CB5849 /* SF-Pro-Display-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Semibold.otf"; sourceTree = "<group>"; };
+		E57891E52336AD3300CB5849 /* SF-Pro-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Bold.otf"; sourceTree = "<group>"; };
+		E57891E62336AD3300CB5849 /* SF-Pro-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Regular.otf"; sourceTree = "<group>"; };
+		E57891EC2336AD6700CB5849 /* Typography.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		E57891EF2336AE0700CB5849 /* UIFont+Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Quiz.swift"; sourceTree = "<group>"; };
+		E57891F32336B06900CB5849 /* UIKit+Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Typography.swift"; sourceTree = "<group>"; };
 		E5CE4242233446D800295277 /* QuizChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5CE4245233446D800295277 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5CE424C233446D900295277 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -209,6 +223,7 @@
 		E57891852336512600CB5849 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E57891E12336AB5200CB5849 /* Cells */,
 				E57891832336511F00CB5849 /* KeywordsView.swift */,
 				E578918F2336591200CB5849 /* KeywordsBottomView.swift */,
 			);
@@ -227,6 +242,7 @@
 		E578919323365AD900CB5849 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				E57891EE2336ADCF00CB5849 /* Typography */,
 				E578919523365AFF00CB5849 /* ProjectColors.swift */,
 				E57891992336665200CB5849 /* Metrics.swift */,
 			);
@@ -269,8 +285,29 @@
 		E57891E02336A9CD00CB5849 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				E57891E52336AD3300CB5849 /* SF-Pro-Display-Bold.otf */,
+				E57891E62336AD3300CB5849 /* SF-Pro-Display-Regular.otf */,
+				E57891E42336AD3300CB5849 /* SF-Pro-Display-Semibold.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		E57891E12336AB5200CB5849 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E57891E22336AB7400CB5849 /* QuizTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		E57891EE2336ADCF00CB5849 /* Typography */ = {
+			isa = PBXGroup;
+			children = (
+				E57891EC2336AD6700CB5849 /* Typography.swift */,
+				E57891EF2336AE0700CB5849 /* UIFont+Quiz.swift */,
+				E57891F32336B06900CB5849 /* UIKit+Typography.swift */,
+			);
+			path = Typography;
 			sourceTree = "<group>";
 		};
 		E5CE4239233446D800295277 = {
@@ -460,7 +497,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E57891E72336AD3300CB5849 /* SF-Pro-Display-Semibold.otf in Resources */,
 				E5CE4250233446D900295277 /* LaunchScreen.storyboard in Resources */,
+				E57891E82336AD3300CB5849 /* SF-Pro-Display-Bold.otf in Resources */,
+				E57891E92336AD3300CB5849 /* SF-Pro-Display-Regular.otf in Resources */,
 				E5CE424D233446D900295277 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,16 +532,20 @@
 				E578915C233639A900CB5849 /* Environment.swift in Sources */,
 				E57891B32336915000CB5849 /* CountDownTimer.swift in Sources */,
 				E57891982336639400CB5849 /* StackViewBuilder.swift in Sources */,
+				E57891E32336AB7400CB5849 /* QuizTableViewCell.swift in Sources */,
 				E5CE4246233446D800295277 /* AppDelegate.swift in Sources */,
 				E578917A2336463900CB5849 /* QuizRequest.swift in Sources */,
 				E57891C42336981000CB5849 /* ViewStateRendering.swift in Sources */,
+				E57891F02336AE0700CB5849 /* UIFont+Quiz.swift in Sources */,
 				E578917D2336504D00CB5849 /* CustomViewController.swift in Sources */,
 				E578918C2336551700CB5849 /* KeywordsConfigurator.swift in Sources */,
 				E57891822336510B00CB5849 /* KeywordsViewController.swift in Sources */,
+				E57891F42336B06900CB5849 /* UIKit+Typography.swift in Sources */,
 				E57891902336591200CB5849 /* KeywordsBottomView.swift in Sources */,
 				E578918A233653D300CB5849 /* ThreadUtils.swift in Sources */,
 				E578919A2336665200CB5849 /* Metrics.swift in Sources */,
 				E5789187233651A300CB5849 /* KeywordsViewModel.swift in Sources */,
+				E57891ED2336AD6700CB5849 /* Typography.swift in Sources */,
 				E578916023363B4300CB5849 /* NSObjectExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
