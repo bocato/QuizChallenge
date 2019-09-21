@@ -61,21 +61,8 @@ final class KeywordsViewController: UIViewController, CustomViewController {
 
 }
 
-// MARK: - KeywordsViewModelDelegate
-extension KeywordsViewController: KeywordsViewModelDelegate {
-    
-    func viewTitleDidChange(_ title: String?) {
-        customView.setTitle(title)
-    }
-    
-    func bottomButtonTitleDidChange(_ title: String?) {
-        customView.bottomView.setButtonTitle(title)
-    }
-    
-    
-    func renderTitle(_ title: String) {
-        
-    }
+// MARK: - ViewStateRendering
+extension KeywordsViewController: ViewStateRendering {
     
     func render(_ state: ViewState) {
         switch state {
@@ -91,6 +78,27 @@ extension KeywordsViewController: KeywordsViewModelDelegate {
         }
         
     }
+}
+
+// MARK: - KeywordsViewModelBinding
+extension KeywordsViewController: KeywordsViewModelBinding {
+    
+    func viewTitleDidChange(_ title: String?) {
+        customView.setTitle(title)
+    }
+    
+    func bottomButtonTitleDidChange(_ title: String?) {
+        customView.setBottomButtonTitle(title)
+    }
+    
+    func bottomRightTextDidChange(_ text: String?) {
+        customView.setBottomRightText(text)
+    }
+    
+    func bottomLeftTextDidChange(_ text: String?) {
+        customView.setBottomLeftText(text)
+    }
+    
 }
 
 extension KeywordsViewController: UITableViewDataSource {

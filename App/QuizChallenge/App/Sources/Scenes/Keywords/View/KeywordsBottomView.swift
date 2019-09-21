@@ -8,13 +8,7 @@
 
 import UIKit
 
-protocol KeywordsBottomViewProtocol {
-    func setButtonTitle(_ title: String?)
-    func setLeftText(_ text: String?)
-    func setRightText(_ text: String?)
-}
-
-final class KeywordsBottomView: UIView, KeywordsBottomViewProtocol {
+final class KeywordsBottomView: UIView {
     
     // MARK: - Properties
     

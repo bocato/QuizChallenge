@@ -24,7 +24,8 @@ extension AppDelegate: KeywordsFactoryProtocol {
         let viewModel = KeywordsViewModel(countDownTimer: countDownTimer, fetchQuizUseCase: fetchQuizUseCase)
         
         let viewController = KeywordsViewController(viewModel: viewModel)
-        viewModel.delegate = viewController
+        viewModel.viewStateRenderer = viewController
+        viewModel.viewModelBinder = viewController
         
         return viewController
     }

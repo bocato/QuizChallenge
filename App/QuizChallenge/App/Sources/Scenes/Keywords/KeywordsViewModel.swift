@@ -8,36 +8,50 @@
 
 import Foundation
 
-protocol KeywordsViewModelDelegate: ViewStateRendering, AnyObject {
+protocol KeywordsViewModelBinding: AnyObject {
     func viewTitleDidChange(_ title: String?)
+    func bottomRightTextDidChange(_ text: String?)
+    func bottomLeftTextDidChange(_ text: String?)
     func bottomButtonTitleDidChange(_ title: String?)
 }
 
 final class KeywordsViewModel {
     
     // MARK: - Dependencies
-    
     let countDownTimer: CountDownTimerProtocol
     let fetchQuizUseCase: FetchQuizUseCaseProvider
+    weak var viewStateRenderer: ViewStateRendering?
+    weak var viewModelBinder: KeywordsViewModelBinding?
     
     // MARK: - Properties
     
-    weak var delegate: KeywordsViewModelDelegate?
     
     // MARK: - Private Properties
     
+    private var answers = [QuizViewData.Item]()
+    
+    // MARK: - View Properties / Binding
+    
     private var viewTitle: String? {
         didSet {
-            delegate?.viewTitleDidChange(viewTitle)
+            viewModelBinder?.viewTitleDidChange(viewTitle)
+        }
+    }
+    private var bottomRightText: String? {
+        didSet {
+            viewModelBinder?.bottomRightTextDidChange(bottomRightText)
+        }
+    }
+    private var bottomLeftText: String? {
+        didSet {
+            viewModelBinder?.bottomLeftTextDidChange(bottomLeftText)
         }
     }
     private var bottomButtonTitle: String? {
         didSet {
-            delegate?.bottomButtonTitleDidChange(bottomButtonTitle)
+            viewModelBinder?.bottomButtonTitleDidChange(bottomButtonTitle)
         }
     }
-    
-    private var answers = [QuizViewData.Item]()
     
     // MARK: - Computed Properties
     
@@ -60,6 +74,8 @@ final class KeywordsViewModel {
     
     func onViewDidLoad() {
         bottomButtonTitle = "Reset"
+        bottomLeftText = "0/50"
+        bottomRightText = "05:00"
         loadQuizData()
     }
     
@@ -71,7 +87,7 @@ final class KeywordsViewModel {
             case let .serviceError(serviceError):
                 self?.handleServiceError(serviceError)
             case .loading:
-                self?.delegate?.render(.loading)
+                self?.viewStateRenderer?.render(.loading)
             default:
                 return
             }
@@ -87,12 +103,15 @@ final class KeywordsViewModel {
     private func handleViewData(_ viewData: QuizViewData) {
         viewTitle = viewData.title
         answers = viewData.items
-        delegate?.render(.content)
+        bottomRightText = "00/\(viewData.items.count)"
+        viewStateRenderer?.render(.content)
     }
     
     private func handleServiceError(_ error: Error) {
         let filler = ViewFiller(title: "Ooops!", subtitle: "Something wrong has happened")
-        delegate?.render(.error(withFiller: filler))
+        viewStateRenderer?.render(.error(withFiller: filler))
     }
+    
+    
     
 }

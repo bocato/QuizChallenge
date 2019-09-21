@@ -9,13 +9,7 @@
 import UIKit
 
 final class KeywordsView: UIView {
-    
-    // MARK: - Public Properties
-
-    var bottomView: KeywordsBottomViewProtocol {
-        return _bottomView
-    }
-    
+   
     // MARK: - Private Properties
     
     private var bottomViewButtonAction: (() -> Void)
@@ -66,7 +60,7 @@ final class KeywordsView: UIView {
         }.build()
     }()
     
-    private lazy var _bottomView: KeywordsBottomView = {
+    private lazy var bottomView: KeywordsBottomView = {
         let view = KeywordsBottomView { [weak self] in
             self?.bottomViewButtonDidReceiveTouchUpInside()
         }
@@ -106,8 +100,8 @@ final class KeywordsView: UIView {
     }
     
     private func constrainBottomView() {
-        addSubview(_bottomView)
-        _bottomView.anchor(
+        addSubview(bottomView)
+        bottomView.anchor(
             left: leftAnchor,
             bottom: bottomAnchor,
             right: rightAnchor,
@@ -132,7 +126,7 @@ final class KeywordsView: UIView {
         tableView.anchor(
             top: topContainerStackView.bottomAnchor,
             left: leftAnchor,
-            bottom: _bottomView.topAnchor,
+            bottom: bottomView.topAnchor,
             right: rightAnchor,
             topConstant: Metrics.Margin.default,
             leftConstant: Metrics.Margin.default,
@@ -144,8 +138,26 @@ final class KeywordsView: UIView {
     // MARK: Public Functions
     
     func setTitle(_ text: String?) {
-        DispatchQueue.main.async {
+        ThreadUtils.runOnMainThread {
             self.titleLabel.text = text
+        }
+    }
+    
+    func setBottomLeftText(_ text: String?) {
+        ThreadUtils.runOnMainThread {
+            self.bottomView.setLeftText(text)
+        }
+    }
+    
+    func setBottomRightText(_ text: String?) {
+        ThreadUtils.runOnMainThread {
+            self.bottomView.setRightText(text)
+        }
+    }
+    
+    func setBottomButtonTitle(_ title: String?) {
+        ThreadUtils.runOnMainThread {
+            self.bottomView.setButtonTitle(title)
         }
     }
     
