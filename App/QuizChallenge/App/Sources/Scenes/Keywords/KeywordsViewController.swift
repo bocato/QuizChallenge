@@ -34,6 +34,7 @@ final class KeywordsViewController: UIViewController, CustomViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.onViewDidLoad()
     }
     
     override func loadView() {
