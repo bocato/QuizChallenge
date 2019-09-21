@@ -53,6 +53,7 @@ final class KeywordsViewController: UIViewController, CustomViewController {
         }
         
         view = CustomView(
+            tableViewDataSource: self,
             refreshControllAction: refreshControllAction,
             bottomViewButtonAction: bottomViewButtonAction
         )
@@ -62,4 +63,32 @@ final class KeywordsViewController: UIViewController, CustomViewController {
     
     
 
+}
+
+// MARK: - KeywordsViewModelDelegate
+extension KeywordsViewController: KeywordsViewModelDelegate {
+    
+    func renderTitle(_ title: String) {
+        customView.setTitle(title)
+    }
+    
+    func render(_ state: ViewState) {
+        debugPrint("render: \(state)")
+    }
+}
+
+extension KeywordsViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.numberOfAnswers
+    }
+    
+    // TODO: Refactor
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        let answer = viewModel.answerItem(at: indexPath.row)
+        cell.textLabel?.text = answer.text
+        return cell
+    }
+    
 }

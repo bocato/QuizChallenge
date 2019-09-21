@@ -15,7 +15,6 @@
 		E578916F233641E200CB5849 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E578916E233641E200CB5849 /* Networking.framework */; };
 		E57891722336421500CB5849 /* QuizEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891712336421500CB5849 /* QuizEntity.swift */; };
 		E57891752336427600CB5849 /* QuizService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891742336427600CB5849 /* QuizService.swift */; };
-		E5789178233644FF00CB5849 /* DependencyInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5789177233644FF00CB5849 /* DependencyInjection.swift */; };
 		E578917A2336463900CB5849 /* QuizRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891792336463900CB5849 /* QuizRequest.swift */; };
 		E578917D2336504D00CB5849 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578917C2336504D00CB5849 /* CustomViewController.swift */; };
 		E57891822336510B00CB5849 /* KeywordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891812336510B00CB5849 /* KeywordsViewController.swift */; };
@@ -29,6 +28,11 @@
 		E578919623365AFF00CB5849 /* ProjectColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578919523365AFF00CB5849 /* ProjectColors.swift */; };
 		E57891982336639400CB5849 /* StackViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891972336639400CB5849 /* StackViewBuilder.swift */; };
 		E578919A2336665200CB5849 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891992336665200CB5849 /* Metrics.swift */; };
+		E57891B32336915000CB5849 /* CountDownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891B22336915000CB5849 /* CountDownTimer.swift */; };
+		E57891BA2336935F00CB5849 /* FetchQuizUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891B92336935E00CB5849 /* FetchQuizUseCase.swift */; };
+		E57891BF2336945D00CB5849 /* QuizViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891BE2336945C00CB5849 /* QuizViewData.swift */; };
+		E57891C42336981000CB5849 /* ViewStateRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891C32336981000CB5849 /* ViewStateRendering.swift */; };
+		E57891C623369C5400CB5849 /* UseCaseEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891C523369C5300CB5849 /* UseCaseEvent.swift */; };
 		E5CE4246233446D800295277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE4245233446D800295277 /* AppDelegate.swift */; };
 		E5CE424D233446D900295277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5CE424C233446D900295277 /* Assets.xcassets */; };
 		E5CE4250233446D900295277 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5CE424E233446D900295277 /* LaunchScreen.storyboard */; };
@@ -53,7 +57,6 @@
 		E578916E233641E200CB5849 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E57891712336421500CB5849 /* QuizEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizEntity.swift; sourceTree = "<group>"; };
 		E57891742336427600CB5849 /* QuizService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizService.swift; sourceTree = "<group>"; };
-		E5789177233644FF00CB5849 /* DependencyInjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DependencyInjection.swift; path = QuizChallenge/App/Sources/DependencyInjection.swift; sourceTree = SOURCE_ROOT; };
 		E57891792336463900CB5849 /* QuizRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizRequest.swift; sourceTree = "<group>"; };
 		E578917C2336504D00CB5849 /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		E57891812336510B00CB5849 /* KeywordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordsViewController.swift; sourceTree = "<group>"; };
@@ -67,6 +70,11 @@
 		E578919523365AFF00CB5849 /* ProjectColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectColors.swift; sourceTree = "<group>"; };
 		E57891972336639400CB5849 /* StackViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewBuilder.swift; sourceTree = "<group>"; };
 		E57891992336665200CB5849 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
+		E57891B22336915000CB5849 /* CountDownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CountDownTimer.swift; path = ../../../../../../../../../Documents/CountDownTimer.swift; sourceTree = "<group>"; };
+		E57891B92336935E00CB5849 /* FetchQuizUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FetchQuizUseCase.swift; path = ../../../../../../../../../../../Documents/FetchQuizUseCase.swift; sourceTree = "<group>"; };
+		E57891BE2336945C00CB5849 /* QuizViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuizViewData.swift; path = ../../../../../../../../../../../Documents/QuizViewData.swift; sourceTree = "<group>"; };
+		E57891C32336981000CB5849 /* ViewStateRendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewStateRendering.swift; path = ../../../../../../../../../Documents/ViewStateRendering.swift; sourceTree = "<group>"; };
+		E57891C523369C5300CB5849 /* UseCaseEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseCaseEvent.swift; sourceTree = "<group>"; };
 		E5CE4242233446D800295277 /* QuizChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5CE4245233446D800295277 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5CE424C233446D900295277 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -126,6 +134,7 @@
 		E5789169233640D300CB5849 /* Conveniences */ = {
 			isa = PBXGroup;
 			children = (
+				E57891C02336977900CB5849 /* Models */,
 				E5789188233653C200CB5849 /* Utils */,
 				E578917B2336503400CB5849 /* UI */,
 				E578915D23363B2600CB5849 /* Extensions */,
@@ -180,6 +189,7 @@
 			children = (
 				E578917C2336504D00CB5849 /* CustomViewController.swift */,
 				E57891972336639400CB5849 /* StackViewBuilder.swift */,
+				E57891C32336981000CB5849 /* ViewStateRendering.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -187,6 +197,7 @@
 		E578917E233650BF00CB5849 /* Keywords */ = {
 			isa = PBXGroup;
 			children = (
+				E57891B42336927500CB5849 /* Domain */,
 				E57891852336512600CB5849 /* View */,
 				E57891812336510B00CB5849 /* KeywordsViewController.swift */,
 				E5789186233651A300CB5849 /* KeywordsViewModel.swift */,
@@ -208,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				E5789189233653D300CB5849 /* ThreadUtils.swift */,
+				E57891B22336915000CB5849 /* CountDownTimer.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -219,6 +231,39 @@
 				E57891992336665200CB5849 /* Metrics.swift */,
 			);
 			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		E57891B42336927500CB5849 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				E57891BB2336942B00CB5849 /* Models */,
+				E57891B82336934200CB5849 /* FetchQuizUseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		E57891B82336934200CB5849 /* FetchQuizUseCase */ = {
+			isa = PBXGroup;
+			children = (
+				E57891B92336935E00CB5849 /* FetchQuizUseCase.swift */,
+			);
+			path = FetchQuizUseCase;
+			sourceTree = "<group>";
+		};
+		E57891BB2336942B00CB5849 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E57891BE2336945C00CB5849 /* QuizViewData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E57891C02336977900CB5849 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E57891C523369C5300CB5849 /* UseCaseEvent.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		E5CE4239233446D800295277 = {
@@ -313,7 +358,6 @@
 				E5CE4245233446D800295277 /* AppDelegate.swift */,
 				E578918D233656AA00CB5849 /* AppDelegate+Factories.swift */,
 				E578915B233639A900CB5849 /* Environment.swift */,
-				E5789177233644FF00CB5849 /* DependencyInjection.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -432,18 +476,22 @@
 				E578918E233656AA00CB5849 /* AppDelegate+Factories.swift in Sources */,
 				E578919623365AFF00CB5849 /* ProjectColors.swift in Sources */,
 				E57891752336427600CB5849 /* QuizService.swift in Sources */,
+				E57891BA2336935F00CB5849 /* FetchQuizUseCase.swift in Sources */,
 				E578919223365AB900CB5849 /* UIColor+Hex.swift in Sources */,
 				E57891722336421500CB5849 /* QuizEntity.swift in Sources */,
+				E57891C623369C5400CB5849 /* UseCaseEvent.swift in Sources */,
+				E57891BF2336945D00CB5849 /* QuizViewData.swift in Sources */,
 				E578915C233639A900CB5849 /* Environment.swift in Sources */,
+				E57891B32336915000CB5849 /* CountDownTimer.swift in Sources */,
 				E57891982336639400CB5849 /* StackViewBuilder.swift in Sources */,
 				E5CE4246233446D800295277 /* AppDelegate.swift in Sources */,
 				E578917A2336463900CB5849 /* QuizRequest.swift in Sources */,
+				E57891C42336981000CB5849 /* ViewStateRendering.swift in Sources */,
 				E578917D2336504D00CB5849 /* CustomViewController.swift in Sources */,
 				E578918C2336551700CB5849 /* KeywordsConfigurator.swift in Sources */,
 				E57891822336510B00CB5849 /* KeywordsViewController.swift in Sources */,
 				E57891902336591200CB5849 /* KeywordsBottomView.swift in Sources */,
 				E578918A233653D300CB5849 /* ThreadUtils.swift in Sources */,
-				E5789178233644FF00CB5849 /* DependencyInjection.swift in Sources */,
 				E578919A2336665200CB5849 /* Metrics.swift in Sources */,
 				E5789187233651A300CB5849 /* KeywordsViewModel.swift in Sources */,
 				E578916023363B4300CB5849 /* NSObjectExtension.swift in Sources */,

@@ -26,12 +26,6 @@ final class KeywordsView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.numberOfLines = 0
-        label.text = """
-        Label Label Label Label Label Label Label Label
-        Label Label Label Label Label Label Label Label
-        Label Label Label Label Label Label Label Label
-        Label Label Label Label Label Label Label Label
-        """
         return label
     }()
     
@@ -81,12 +75,14 @@ final class KeywordsView: UIView {
     // MARK: - Initialization
     
     init(
+        tableViewDataSource: UITableViewDataSource,
         refreshControllAction: @escaping (() -> Void),
         bottomViewButtonAction: @escaping (() -> Void)
     ) {
         self.refreshControllAction = refreshControllAction
         self.bottomViewButtonAction = bottomViewButtonAction
         super.init(frame: UIScreen.main.bounds)
+        self.tableView.dataSource = tableViewDataSource
         setup()
     }
     
@@ -130,6 +126,12 @@ final class KeywordsView: UIView {
             leftConstant: Metrics.Margin.default,
             rightConstant: Metrics.Margin.default
         )
+    }
+    
+    // MARK: Public Functions
+    
+    func setTitle(_ text: String) {
+        titleLabel.text = text
     }
     
     // MARK: - Actions

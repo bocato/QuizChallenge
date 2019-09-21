@@ -31,7 +31,7 @@ final class QuizService: QuizServiceProvider, CodableRequesting {
     
     // MARK: - Initialization
     
-    init(dispatcher: URLRequestDispatching = DependencyInjection.urlSessionDispatcher) {
+    init(dispatcher: URLRequestDispatching) {
         self.dispatcher = dispatcher
     }
     

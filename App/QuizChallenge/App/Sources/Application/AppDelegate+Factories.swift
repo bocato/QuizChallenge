@@ -7,11 +7,26 @@
 //
 
 import UIKit
+import Networking
 
 // This could be done elsewere, but since it's a simple application, i'll put it here for now.
+// Also, we could implement a more intricate system/strategy for depency injection with containers or something else.
 extension AppDelegate: KeywordsFactoryProtocol {
+    
     func makeKeywordsViewController() -> KeywordsViewController {
-        let viewModel = KeywordsViewModel()
-        return KeywordsViewController(viewModel: viewModel)
+        
+        let countDownTimer = CountDownTimer()
+        
+        let dispatcher = URLSessionDispatcher()
+        let quizService = QuizService(dispatcher: dispatcher)
+        let fetchQuizUseCase = FetchQuizUseCase(quizService: quizService)
+        
+        let viewModel = KeywordsViewModel(countDownTimer: countDownTimer, fetchQuizUseCase: fetchQuizUseCase)
+        
+        let viewController = KeywordsViewController(viewModel: viewModel)
+        viewModel.delegate = viewController
+        
+        return viewController
     }
+    
 }
