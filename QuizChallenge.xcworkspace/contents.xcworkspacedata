@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "container:"
+      name = "Libraries">
+      <FileRef
+         location = "group:Libraries/Networking/Networking.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Application">
+      <FileRef
+         location = "group:App/QuizChallenge.xcodeproj">
+      </FileRef>
+   </Group>
+</Workspace>
