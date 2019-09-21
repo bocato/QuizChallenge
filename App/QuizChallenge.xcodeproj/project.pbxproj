@@ -29,8 +29,6 @@
 		E57891982336639400CB5849 /* StackViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891972336639400CB5849 /* StackViewBuilder.swift */; };
 		E578919A2336665200CB5849 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891992336665200CB5849 /* Metrics.swift */; };
 		E57891B32336915000CB5849 /* CountDownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891B22336915000CB5849 /* CountDownTimer.swift */; };
-		E57891BA2336935F00CB5849 /* FetchQuizUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891B92336935E00CB5849 /* FetchQuizUseCase.swift */; };
-		E57891BF2336945D00CB5849 /* QuizViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891BE2336945C00CB5849 /* QuizViewData.swift */; };
 		E57891C42336981000CB5849 /* ViewStateRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891C32336981000CB5849 /* ViewStateRendering.swift */; };
 		E57891C623369C5400CB5849 /* UseCaseEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891C523369C5300CB5849 /* UseCaseEvent.swift */; };
 		E57891E32336AB7400CB5849 /* QuizTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891E22336AB7400CB5849 /* QuizTableViewCell.swift */; };
@@ -40,6 +38,10 @@
 		E57891ED2336AD6700CB5849 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891EC2336AD6700CB5849 /* Typography.swift */; };
 		E57891F02336AE0700CB5849 /* UIFont+Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891EF2336AE0700CB5849 /* UIFont+Quiz.swift */; };
 		E57891F42336B06900CB5849 /* UIKit+Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891F32336B06900CB5849 /* UIKit+Typography.swift */; };
+		E57891FA2336C0E600CB5849 /* QuizViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891F92336C0E600CB5849 /* QuizViewData.swift */; };
+		E57891FC2336C12A00CB5849 /* FetchQuizUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891FB2336C12900CB5849 /* FetchQuizUseCase.swift */; };
+		E57892002336C20E00CB5849 /* CountdownFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891FF2336C20E00CB5849 /* CountdownFormatter.swift */; };
+		E57892052336C96900CB5849 /* ModalHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57892042336C96900CB5849 /* ModalHelper.swift */; };
 		E5CE4246233446D800295277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE4245233446D800295277 /* AppDelegate.swift */; };
 		E5CE424D233446D900295277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5CE424C233446D900295277 /* Assets.xcassets */; };
 		E5CE4250233446D900295277 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5CE424E233446D900295277 /* LaunchScreen.storyboard */; };
@@ -78,8 +80,6 @@
 		E57891972336639400CB5849 /* StackViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewBuilder.swift; sourceTree = "<group>"; };
 		E57891992336665200CB5849 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
 		E57891B22336915000CB5849 /* CountDownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CountDownTimer.swift; path = ../../../../../../../../../Documents/CountDownTimer.swift; sourceTree = "<group>"; };
-		E57891B92336935E00CB5849 /* FetchQuizUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FetchQuizUseCase.swift; path = ../../../../../../../../../../../Documents/FetchQuizUseCase.swift; sourceTree = "<group>"; };
-		E57891BE2336945C00CB5849 /* QuizViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuizViewData.swift; path = ../../../../../../../../../../../Documents/QuizViewData.swift; sourceTree = "<group>"; };
 		E57891C32336981000CB5849 /* ViewStateRendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewStateRendering.swift; path = ../../../../../../../../../Documents/ViewStateRendering.swift; sourceTree = "<group>"; };
 		E57891C523369C5300CB5849 /* UseCaseEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseCaseEvent.swift; sourceTree = "<group>"; };
 		E57891E22336AB7400CB5849 /* QuizTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTableViewCell.swift; sourceTree = "<group>"; };
@@ -89,6 +89,10 @@
 		E57891EC2336AD6700CB5849 /* Typography.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		E57891EF2336AE0700CB5849 /* UIFont+Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Quiz.swift"; sourceTree = "<group>"; };
 		E57891F32336B06900CB5849 /* UIKit+Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Typography.swift"; sourceTree = "<group>"; };
+		E57891F92336C0E600CB5849 /* QuizViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewData.swift; sourceTree = "<group>"; };
+		E57891FB2336C12900CB5849 /* FetchQuizUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchQuizUseCase.swift; sourceTree = "<group>"; };
+		E57891FF2336C20E00CB5849 /* CountdownFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownFormatter.swift; sourceTree = "<group>"; };
+		E57892042336C96900CB5849 /* ModalHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalHelper.swift; sourceTree = "<group>"; };
 		E5CE4242233446D800295277 /* QuizChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5CE4245233446D800295277 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5CE424C233446D900295277 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -204,6 +208,7 @@
 				E578917C2336504D00CB5849 /* CustomViewController.swift */,
 				E57891972336639400CB5849 /* StackViewBuilder.swift */,
 				E57891C32336981000CB5849 /* ViewStateRendering.swift */,
+				E57892042336C96900CB5849 /* ModalHelper.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -252,8 +257,8 @@
 		E57891B42336927500CB5849 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				E57891BB2336942B00CB5849 /* Models */,
 				E57891B82336934200CB5849 /* FetchQuizUseCase */,
+				E57891FF2336C20E00CB5849 /* CountdownFormatter.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -261,17 +266,10 @@
 		E57891B82336934200CB5849 /* FetchQuizUseCase */ = {
 			isa = PBXGroup;
 			children = (
-				E57891B92336935E00CB5849 /* FetchQuizUseCase.swift */,
+				E57891FB2336C12900CB5849 /* FetchQuizUseCase.swift */,
+				E57891F92336C0E600CB5849 /* QuizViewData.swift */,
 			);
 			path = FetchQuizUseCase;
-			sourceTree = "<group>";
-		};
-		E57891BB2336942B00CB5849 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				E57891BE2336945C00CB5849 /* QuizViewData.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		E57891C02336977900CB5849 /* Models */ = {
@@ -522,13 +520,13 @@
 				E57891842336511F00CB5849 /* KeywordsView.swift in Sources */,
 				E578916523363C9000CB5849 /* UIView+AutoLayout.swift in Sources */,
 				E578918E233656AA00CB5849 /* AppDelegate+Factories.swift in Sources */,
+				E57891FC2336C12A00CB5849 /* FetchQuizUseCase.swift in Sources */,
 				E578919623365AFF00CB5849 /* ProjectColors.swift in Sources */,
 				E57891752336427600CB5849 /* QuizService.swift in Sources */,
-				E57891BA2336935F00CB5849 /* FetchQuizUseCase.swift in Sources */,
 				E578919223365AB900CB5849 /* UIColor+Hex.swift in Sources */,
 				E57891722336421500CB5849 /* QuizEntity.swift in Sources */,
+				E57892052336C96900CB5849 /* ModalHelper.swift in Sources */,
 				E57891C623369C5400CB5849 /* UseCaseEvent.swift in Sources */,
-				E57891BF2336945D00CB5849 /* QuizViewData.swift in Sources */,
 				E578915C233639A900CB5849 /* Environment.swift in Sources */,
 				E57891B32336915000CB5849 /* CountDownTimer.swift in Sources */,
 				E57891982336639400CB5849 /* StackViewBuilder.swift in Sources */,
@@ -542,11 +540,13 @@
 				E57891822336510B00CB5849 /* KeywordsViewController.swift in Sources */,
 				E57891F42336B06900CB5849 /* UIKit+Typography.swift in Sources */,
 				E57891902336591200CB5849 /* KeywordsBottomView.swift in Sources */,
+				E57892002336C20E00CB5849 /* CountdownFormatter.swift in Sources */,
 				E578918A233653D300CB5849 /* ThreadUtils.swift in Sources */,
 				E578919A2336665200CB5849 /* Metrics.swift in Sources */,
 				E5789187233651A300CB5849 /* KeywordsViewModel.swift in Sources */,
 				E57891ED2336AD6700CB5849 /* Typography.swift in Sources */,
 				E578916023363B4300CB5849 /* NSObjectExtension.swift in Sources */,
+				E57891FA2336C0E600CB5849 /* QuizViewData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

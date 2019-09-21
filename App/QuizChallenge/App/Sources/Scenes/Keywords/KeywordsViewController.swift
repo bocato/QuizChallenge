@@ -16,11 +16,11 @@ final class KeywordsViewController: UIViewController, CustomViewController {
     
     // MARK: - Properties
     
-    let viewModel: KeywordsViewModel
+    let viewModel: KeywordsViewModelDisplayLogic & KeywordsViewModelBusinessLogic
     
     // MARK: - Initialization
     
-    init(viewModel: KeywordsViewModel) {
+    init(viewModel: KeywordsViewModelDisplayLogic & KeywordsViewModelBusinessLogic) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -45,19 +45,16 @@ final class KeywordsViewController: UIViewController, CustomViewController {
     
     private func setupCustomView () {
         
-        let bottomViewButtonAction: (() -> Void) = {
-            debugPrint("bottomViewButtonAction")
+        let bottomViewButtonAction: (() -> Void) = { [viewModel] in
+            viewModel.toggleTimer()
         }
         
         view = CustomView(
             tableViewDataSource: self,
             bottomViewButtonAction: bottomViewButtonAction
         )
+        
     }
-    
-    // MARK: - Layout
-    
-    
 
 }
 
@@ -97,6 +94,10 @@ extension KeywordsViewController: KeywordsViewModelBinding {
     
     func bottomLeftTextDidChange(_ text: String?) {
         customView.setBottomLeftText(text)
+    }
+    
+    func shouldShowTimerFinishedModalWithData(_ modalData: SimpleModalViewData) {
+        debugPrint("should show modal message")
     }
     
 }

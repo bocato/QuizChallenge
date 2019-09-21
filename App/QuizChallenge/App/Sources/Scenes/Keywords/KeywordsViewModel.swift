@@ -13,22 +13,37 @@ protocol KeywordsViewModelBinding: AnyObject {
     func bottomRightTextDidChange(_ text: String?)
     func bottomLeftTextDidChange(_ text: String?)
     func bottomButtonTitleDidChange(_ title: String?)
+    func shouldShowTimerFinishedModalWithData(_ modalData: SimpleModalViewData)
 }
 
-final class KeywordsViewModel {
+protocol KeywordsViewModelDisplayLogic {
+    var numberOfAnswers: Int { get }
+    func answerItem(at index: Int) -> QuizViewData.Item
+    func onViewDidLoad()
+}
+
+protocol KeywordsViewModelBusinessLogic {
+    func loadQuizData()
+    func toggleTimer()
+}
+
+final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
     
     // MARK: - Dependencies
+    
     let countDownTimer: CountDownTimerProtocol
     let fetchQuizUseCase: FetchQuizUseCaseProvider
+    let countDownFormatter: CountDownFormatting
+    
+    // MARK: - Binding
+    
     weak var viewStateRenderer: ViewStateRendering?
     weak var viewModelBinder: KeywordsViewModelBinding?
     
-    // MARK: - Properties
-    
-    
     // MARK: - Private Properties
     
-    private var answers = [QuizViewData.Item]()
+    private var possibleAnswers = [QuizViewData.Item]()
+    private var isTimerRunning = false
     
     // MARK: - View Properties / Binding
     
@@ -53,24 +68,19 @@ final class KeywordsViewModel {
         }
     }
     
-    // MARK: - Computed Properties
-    
-    var numberOfAnswers: Int {
-        return answers.count
-    }
-    
     // MARK: - Initialization
     
     init(
         countDownTimer: CountDownTimerProtocol = CountDownTimer(),
-        fetchQuizUseCase: FetchQuizUseCaseProvider
+        fetchQuizUseCase: FetchQuizUseCaseProvider,
+        countDownFormatter: CountDownFormatting = CountDownFormatter()
     ) {
         self.countDownTimer = countDownTimer
         self.fetchQuizUseCase = fetchQuizUseCase
+        self.countDownFormatter = countDownFormatter
     }
     
-    
-    // MARK: - Public Functions
+    // MARK: - Display Logic
     
     func onViewDidLoad() {
         bottomButtonTitle = "Reset"
@@ -78,6 +88,19 @@ final class KeywordsViewModel {
         bottomRightText = "05:00"
         loadQuizData()
     }
+    
+    var numberOfAnswers: Int {
+        return possibleAnswers.count
+    }
+    
+    func answerItem(at index: Int) -> QuizViewData.Item {
+        return possibleAnswers[index]
+    }
+    
+}
+
+// MARK: - KeywordsViewModelBusinessLogic
+extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
     
     func loadQuizData() {
         fetchQuizUseCase.execute { [weak self] event in
@@ -94,15 +117,19 @@ final class KeywordsViewModel {
         }
     }
     
-    func answerItem(at index: Int) -> QuizViewData.Item {
-        return answers[index]
+    func toggleTimer() {
+        if countDownTimer.isRunning {
+            countDownTimer.restart()
+        } else {
+            startTimer()
+        }
     }
     
     // MARK: - FetchQuizUseCase Handlers
     
     private func handleViewData(_ viewData: QuizViewData) {
         viewTitle = viewData.title
-        answers = viewData.items
+        possibleAnswers = viewData.items
         bottomRightText = "00/\(viewData.items.count)"
         viewStateRenderer?.render(.content)
     }
@@ -112,6 +139,41 @@ final class KeywordsViewModel {
         viewStateRenderer?.render(.error(withFiller: filler))
     }
     
+    // MARK: - Timer Logic
     
+    private func startTimer() {
+        
+        let timeLeft = 60 * 5
+        
+        let onTick: CountDownTimerProtocol.OnTickClosure = { [weak self] timeLeft in
+            self?.bottomRightText = self?.countDownFormatter.formatToMinutes(from: timeLeft)
+        }
+        
+        let onFinish: CountDownTimerProtocol.OnFinishClosure = { [weak self] in
+            guard let self = self else { return }
+            let message = self.buildTimerModalData()
+            self.viewModelBinder?.shouldShowTimerFinishedModalWithData(message)
+        }
+        
+        countDownTimer.dispatch(
+            for: timeLeft,
+            timeInterval: 1.0,
+            onTick: onTick,
+            onFinish: onFinish
+        )
+        
+    }
+    
+    private func buildTimerModalData() -> SimpleModalViewData {
+        let rightAnswers = 40 // TODO: CHANGE TO REAL DATA
+        let title = "Time finished"
+        let subtitle = "Sorry, time is up! You got \(rightAnswers) out of \(possibleAnswers.count) answers."
+        let buttonText = "Try Again"
+        return SimpleModalViewData(
+            title: title,
+            subtitle: subtitle,
+            buttonText: buttonText
+        )
+    }
     
 }
