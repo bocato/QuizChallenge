@@ -45,17 +45,12 @@ final class KeywordsViewController: UIViewController, CustomViewController {
     
     private func setupCustomView () {
         
-        let refreshControllAction: (() -> Void) = {
-            debugPrint("refreshControllAction")
-        }
-        
         let bottomViewButtonAction: (() -> Void) = {
             debugPrint("bottomViewButtonAction")
         }
         
         view = CustomView(
             tableViewDataSource: self,
-            refreshControllAction: refreshControllAction,
             bottomViewButtonAction: bottomViewButtonAction
         )
     }
@@ -74,7 +69,18 @@ extension KeywordsViewController: KeywordsViewModelDelegate {
     }
     
     func render(_ state: ViewState) {
-        debugPrint("render: \(state)")
+        switch state {
+        case .loading:
+            debugPrint("render: \(state)")
+        case .content:
+            customView.reloadTableView()
+            customView.showTableView()
+        case let .error(withFiller: filler):
+            debugPrint("render: \(filler)")
+        default:
+            return
+        }
+        
     }
 }
 

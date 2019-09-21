@@ -85,6 +85,7 @@ final class KeywordsBottomView: UIView, KeywordsBottomViewProtocol {
     // MARK: - Setup
     
     private func setup() {
+        isUserInteractionEnabled = true
         backgroundColor = .quizGray
         constrainContentStackView()
     }

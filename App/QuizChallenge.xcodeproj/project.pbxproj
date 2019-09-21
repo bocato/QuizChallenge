@@ -266,6 +266,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		E57891E02336A9CD00CB5849 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		E5CE4239233446D800295277 = {
 			isa = PBXGroup;
 			children = (
@@ -345,6 +352,7 @@
 		E5CE42772334473F00295277 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E57891E02336A9CD00CB5849 /* Fonts */,
 				E5CE4251233446D900295277 /* Info.plist */,
 				E5CE424E233446D900295277 /* LaunchScreen.storyboard */,
 				E5CE424C233446D900295277 /* Assets.xcassets */,

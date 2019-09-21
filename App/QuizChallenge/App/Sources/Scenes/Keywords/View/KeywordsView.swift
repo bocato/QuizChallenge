@@ -18,7 +18,6 @@ final class KeywordsView: UIView {
     
     // MARK: - Private Properties
     
-    private var refreshControllAction: (() -> Void)
     private var bottomViewButtonAction: (() -> Void)
 
     // MARK: UI
@@ -42,33 +41,33 @@ final class KeywordsView: UIView {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         
-        tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshControllDidChangeValue), for: .valueChanged)
-        
         tableView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.onDrag
         
         // layout
         tableView.estimatedRowHeight = 50.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .singleLine
+        tableView.isHidden = true
         
         return tableView
     }()
     
-    private lazy var listContainerStackView: UIStackView = {
+    private lazy var topContainerStackView: UIStackView = {
         return StackViewBuilder {
             $0.arrangedSubviews = [
                 self.titleLabel,
-                self.textField,
-                self.tableView
+                self.textField
             ]
+            $0.spacing = Metrics.Margin.default
             $0.axis = .vertical
-            $0.distribution = .fillProportionally
+            $0.distribution = .fill
         }.build()
     }()
     
     private lazy var _bottomView: KeywordsBottomView = {
-        let view = KeywordsBottomView(buttonAction: bottomViewButtonAction)
+        let view = KeywordsBottomView { [weak self] in
+            self?.bottomViewButtonDidReceiveTouchUpInside()
+        }
         return view
     }()
     
@@ -76,10 +75,8 @@ final class KeywordsView: UIView {
     
     init(
         tableViewDataSource: UITableViewDataSource,
-        refreshControllAction: @escaping (() -> Void),
         bottomViewButtonAction: @escaping (() -> Void)
     ) {
-        self.refreshControllAction = refreshControllAction
         self.bottomViewButtonAction = bottomViewButtonAction
         super.init(frame: UIScreen.main.bounds)
         self.tableView.dataSource = tableViewDataSource
@@ -102,7 +99,8 @@ final class KeywordsView: UIView {
     
     private func addSubViews() {
         constrainBottomView()
-        constrainListContainerStackView()
+        constrainTopContainerStackView()
+        constrainTableView()
     }
     
     private func constrainBottomView() {
@@ -115,15 +113,28 @@ final class KeywordsView: UIView {
         )
     }
     
-    private func constrainListContainerStackView() {
-        addSubview(listContainerStackView)
-        listContainerStackView.anchor(
+    private func constrainTopContainerStackView() {
+        addSubview(topContainerStackView)
+        topContainerStackView.anchor(
             top: topAnchor,
+            left: leftAnchor,
+            right: rightAnchor,
+            topConstant: Metrics.Margin.top,
+            leftConstant: Metrics.Margin.default,
+            rightConstant: Metrics.Margin.default
+        )
+    }
+    
+    private func constrainTableView() {
+        addSubview(tableView)
+        tableView.anchor(
+            top: topContainerStackView.bottomAnchor,
             left: leftAnchor,
             bottom: _bottomView.topAnchor,
             right: rightAnchor,
             topConstant: Metrics.Margin.default,
             leftConstant: Metrics.Margin.default,
+            bottomConstant: Metrics.Margin.default,
             rightConstant: Metrics.Margin.default
         )
     }
@@ -131,16 +142,23 @@ final class KeywordsView: UIView {
     // MARK: Public Functions
     
     func setTitle(_ text: String) {
-        titleLabel.text = text
+        DispatchQueue.main.async {
+            self.titleLabel.text = text
+        }
+    }
+    
+    func reloadTableView() {
+        tableView.reloadData()
+    }
+    
+    func showTableView(_ show: Bool = true) {
+        tableView.isHidden = !show
     }
     
     // MARK: - Actions
     
-    @objc private func refreshControllDidChangeValue() {
-        refreshControl.beginRefreshing()
-        ThreadUtils.runAfterDelay(1) {
-            self.refreshControllAction()
-        }
+    private func bottomViewButtonDidReceiveTouchUpInside() {
+        bottomViewButtonAction()
     }
 
 }

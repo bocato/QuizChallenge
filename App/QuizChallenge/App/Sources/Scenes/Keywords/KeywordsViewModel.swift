@@ -47,7 +47,7 @@ final class KeywordsViewModel {
     // MARK: - Public Functions
     
     func onViewDidLoad() {
-        delegate?.render(.loading)
+        loadQuizData()
     }
     
     func loadQuizData() {
@@ -78,7 +78,8 @@ final class KeywordsViewModel {
     }
     
     private func handleServiceError(_ error: Error) {
-        
+        let filler = ViewFiller(title: "Ooops!", subtitle: "Something wrong has happened")
+        delegate?.render(.error(withFiller: filler))
     }
     
 }

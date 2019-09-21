@@ -17,6 +17,9 @@ struct Metrics {
         
         /// 16 points of spacing.
         static let `default`: CGFloat = 16.0
+        
+        /// 44 points of spacing.
+        static let top: CGFloat = 44.0
     }
     
     struct Height {
