@@ -17,11 +17,16 @@ final class KeywordsViewController: UIViewController, CustomViewController {
     // MARK: - Properties
     
     let viewModel: KeywordsViewModelDisplayLogic & KeywordsViewModelBusinessLogic
+    let modalHelper: ModalHelperProtocol
     
     // MARK: - Initialization
     
-    init(viewModel: KeywordsViewModelDisplayLogic & KeywordsViewModelBusinessLogic) {
+    init(
+        viewModel: KeywordsViewModelDisplayLogic & KeywordsViewModelBusinessLogic,
+        modalHelper: ModalHelperProtocol = ModalHelper()
+    ) {
         self.viewModel = viewModel
+        self.modalHelper = modalHelper
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -49,9 +54,14 @@ final class KeywordsViewController: UIViewController, CustomViewController {
             viewModel.toggleTimer()
         }
         
+        let textFieldEditingDidEndClosure: ((String?) -> Void) = { newText in
+            debugPrint("newText = \(newText)")
+        }
+        
         view = CustomView(
             tableViewDataSource: self,
-            bottomViewButtonAction: bottomViewButtonAction
+            bottomViewButtonAction: bottomViewButtonAction,
+            textFieldEditingDidEndClosure: textFieldEditingDidEndClosure
         )
         
     }
@@ -84,6 +94,10 @@ extension KeywordsViewController: KeywordsViewModelBinding {
         customView.setTitle(title)
     }
     
+    func textFieldPlaceholderDidChange(_ text: String?) {
+        customView.setTextFieldPlaceHolder(text)
+    }
+    
     func bottomButtonTitleDidChange(_ title: String?) {
         customView.setBottomButtonTitle(title)
     }
@@ -97,7 +111,18 @@ extension KeywordsViewController: KeywordsViewModelBinding {
     }
     
     func shouldShowTimerFinishedModalWithData(_ modalData: SimpleModalViewData) {
-        debugPrint("should show modal message")
+        
+        let buttonActionHandler: (() -> Void) = { [viewModel] in
+            viewModel.resetQuiz()
+        }
+        
+        modalHelper.showAlert(
+            inController: self,
+            data: modalData,
+            buttonActionHandler: buttonActionHandler,
+            presentationCompletion: nil
+        )
+        
     }
     
 }

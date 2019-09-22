@@ -42,6 +42,9 @@
 		E57891FC2336C12A00CB5849 /* FetchQuizUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891FB2336C12900CB5849 /* FetchQuizUseCase.swift */; };
 		E57892002336C20E00CB5849 /* CountdownFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891FF2336C20E00CB5849 /* CountdownFormatter.swift */; };
 		E57892052336C96900CB5849 /* ModalHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57892042336C96900CB5849 /* ModalHelper.swift */; };
+		E578921E233716AA00CB5849 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578921D233716AA00CB5849 /* UITextFieldExtension.swift */; };
+		E578922023371A3900CB5849 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578921F23371A3900CB5849 /* StringExtension.swift */; };
+		E578922223371A7E00CB5849 /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578922123371A7E00CB5849 /* StringExtensionTests.swift */; };
 		E5CE4246233446D800295277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE4245233446D800295277 /* AppDelegate.swift */; };
 		E5CE424D233446D900295277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5CE424C233446D900295277 /* Assets.xcassets */; };
 		E5CE4250233446D900295277 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5CE424E233446D900295277 /* LaunchScreen.storyboard */; };
@@ -93,6 +96,9 @@
 		E57891FB2336C12900CB5849 /* FetchQuizUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchQuizUseCase.swift; sourceTree = "<group>"; };
 		E57891FF2336C20E00CB5849 /* CountdownFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownFormatter.swift; sourceTree = "<group>"; };
 		E57892042336C96900CB5849 /* ModalHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalHelper.swift; sourceTree = "<group>"; };
+		E578921D233716AA00CB5849 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
+		E578921F23371A3900CB5849 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		E578922123371A7E00CB5849 /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		E5CE4242233446D800295277 /* QuizChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5CE4245233446D800295277 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5CE424C233446D900295277 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,8 +106,6 @@
 		E5CE4251233446D900295277 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5CE4256233446DA00295277 /* QuizChallengeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuizChallengeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5CE425C233446DA00295277 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E5CE4265233446DA00295277 /* QuizChallengeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizChallengeUITests.swift; sourceTree = "<group>"; };
-		E5CE4267233446DA00295277 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +133,8 @@
 				E578915F23363B4300CB5849 /* NSObjectExtension.swift */,
 				E578916423363C9000CB5849 /* UIView+AutoLayout.swift */,
 				E578919123365AB900CB5849 /* UIColor+Hex.swift */,
+				E578921D233716AA00CB5849 /* UITextFieldExtension.swift */,
+				E578921F23371A3900CB5849 /* StringExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -137,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				E578916223363B6400CB5849 /* NSObjectExtensionTests.swift */,
+				E578922123371A7E00CB5849 /* StringExtensionTests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -313,7 +320,6 @@
 			children = (
 				E5CE4244233446D800295277 /* QuizChallenge */,
 				E5CE4259233446DA00295277 /* QuizChallengeTests */,
-				E5CE4264233446DA00295277 /* QuizChallengeUITests */,
 				E5CE4243233446D800295277 /* Products */,
 				E578916D233641E200CB5849 /* Frameworks */,
 			);
@@ -345,15 +351,6 @@
 				E5CE425C233446DA00295277 /* Info.plist */,
 			);
 			path = QuizChallengeTests;
-			sourceTree = "<group>";
-		};
-		E5CE4264233446DA00295277 /* QuizChallengeUITests */ = {
-			isa = PBXGroup;
-			children = (
-				E5CE4265233446DA00295277 /* QuizChallengeUITests.swift */,
-				E5CE4267233446DA00295277 /* Info.plist */,
-			);
-			path = QuizChallengeUITests;
 			sourceTree = "<group>";
 		};
 		E5CE4273233446E700295277 /* App */ = {
@@ -524,6 +521,7 @@
 				E578919623365AFF00CB5849 /* ProjectColors.swift in Sources */,
 				E57891752336427600CB5849 /* QuizService.swift in Sources */,
 				E578919223365AB900CB5849 /* UIColor+Hex.swift in Sources */,
+				E578921E233716AA00CB5849 /* UITextFieldExtension.swift in Sources */,
 				E57891722336421500CB5849 /* QuizEntity.swift in Sources */,
 				E57892052336C96900CB5849 /* ModalHelper.swift in Sources */,
 				E57891C623369C5400CB5849 /* UseCaseEvent.swift in Sources */,
@@ -540,6 +538,7 @@
 				E57891822336510B00CB5849 /* KeywordsViewController.swift in Sources */,
 				E57891F42336B06900CB5849 /* UIKit+Typography.swift in Sources */,
 				E57891902336591200CB5849 /* KeywordsBottomView.swift in Sources */,
+				E578922023371A3900CB5849 /* StringExtension.swift in Sources */,
 				E57892002336C20E00CB5849 /* CountdownFormatter.swift in Sources */,
 				E578918A233653D300CB5849 /* ThreadUtils.swift in Sources */,
 				E578919A2336665200CB5849 /* Metrics.swift in Sources */,
@@ -556,6 +555,7 @@
 			files = (
 				E578916323363B6400CB5849 /* NSObjectExtensionTests.swift in Sources */,
 				E578916823363DF400CB5849 /* EnvironmentTests.swift in Sources */,
+				E578922223371A7E00CB5849 /* StringExtensionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

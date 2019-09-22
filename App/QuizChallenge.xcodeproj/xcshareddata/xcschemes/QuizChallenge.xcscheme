@@ -39,16 +39,6 @@
                ReferencedContainer = "container:QuizChallenge.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E5CE4260233446DA00295277"
-               BuildableName = "QuizChallengeUITests.xctest"
-               BlueprintName = "QuizChallengeUITests"
-               ReferencedContainer = "container:QuizChallenge.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

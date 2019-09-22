@@ -13,6 +13,7 @@ final class KeywordsView: UIView {
     // MARK: - Private Properties
     
     private var bottomViewButtonAction: (() -> Void)
+    private var textFieldEditingDidEndClosure: ((_ newText: String?) -> Void)
 
     // MARK: UI
     
@@ -25,9 +26,13 @@ final class KeywordsView: UIView {
     
     private lazy var textField: UITextField = {
         let textField = UITextField(frame: .zero)
-        textField.borderStyle = .roundedRect
+        textField.borderStyle = .none
         textField.placeholder = "Insert Word"
+        textField.backgroundColor = .quizGray
+        textField.layer.cornerRadius = 12
+        textField.addPadding(left: 12, right: 12)
         textField.anchor(heightConstant: Metrics.Height.textField)
+        textField.addTarget(self, action: #selector(textFieldEditingDidEnd), for: .editingDidEnd)
         return textField
     }()
     
@@ -39,6 +44,7 @@ final class KeywordsView: UIView {
         tableView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.onDrag
         
         // layout
+        tableView.allowsSelection = false
         tableView.estimatedRowHeight = 50.0
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .singleLine
@@ -71,9 +77,11 @@ final class KeywordsView: UIView {
     
     init(
         tableViewDataSource: UITableViewDataSource,
-        bottomViewButtonAction: @escaping (() -> Void)
+        bottomViewButtonAction: @escaping (() -> Void),
+        textFieldEditingDidEndClosure: @escaping((_ newText: String?) -> Void)
     ) {
         self.bottomViewButtonAction = bottomViewButtonAction
+        self.textFieldEditingDidEndClosure = textFieldEditingDidEndClosure
         super.init(frame: UIScreen.main.bounds)
         self.tableView.dataSource = tableViewDataSource
         setup()
@@ -105,7 +113,7 @@ final class KeywordsView: UIView {
             left: leftAnchor,
             bottom: bottomAnchor,
             right: rightAnchor,
-            heightConstant: 120
+            heightConstant: 140
         )
     }
     
@@ -143,6 +151,12 @@ final class KeywordsView: UIView {
         }
     }
     
+    func setTextFieldPlaceHolder(_ text: String?) {
+        ThreadUtils.runOnMainThread {
+            self.textField.placeholder = text
+        }
+    }
+    
     func setBottomLeftText(_ text: String?) {
         ThreadUtils.runOnMainThread {
             self.bottomView.setLeftText(text)
@@ -161,6 +175,10 @@ final class KeywordsView: UIView {
         }
     }
     
+    func resetTextField() {
+        textField.text = nil
+    }
+    
     func reloadTableView() {
         tableView.reloadData()
     }
@@ -173,6 +191,10 @@ final class KeywordsView: UIView {
     
     private func bottomViewButtonDidReceiveTouchUpInside() {
         bottomViewButtonAction()
+    }
+    
+    @objc private func textFieldEditingDidEnd(){
+        textFieldEditingDidEndClosure(textField.text)
     }
 
 }

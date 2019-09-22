@@ -14,8 +14,8 @@ protocol CountDownFormatting {
 
 final class CountDownFormatter: CountDownFormatting {
     func formatToMinutes(from timeInSeconds: Int) -> String {
-        let minutes = timeInSeconds % 60
-        let seconds = timeInSeconds - minutes
+        let minutes = timeInSeconds / 60
+        let seconds = timeInSeconds % 60
         return String(format: "%02d", minutes) + ":" + String(format: "%02d", seconds)
     }
 }

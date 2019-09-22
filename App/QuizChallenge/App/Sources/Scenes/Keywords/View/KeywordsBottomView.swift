@@ -19,14 +19,16 @@ final class KeywordsBottomView: UIView {
     private lazy var leftTextLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textAlignment = .left
-        label.text = "leftTextLabel" // TODO: Remove
+        label.text = "00/50"
+        label.apply(typography: .largeTitle, with: .black)
         return label
     }()
     
     private lazy var rightTextLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textAlignment = .right
-        label.text = "rightTextLabel" // TODO: Remove
+        label.text = "05:00"
+        label.apply(typography: .largeTitle, with: .black)
         return label
     }()
     
@@ -36,7 +38,7 @@ final class KeywordsBottomView: UIView {
         button.titleLabel?.apply(typography: .button, with: .white)
         button.backgroundColor = .quizOrange
         button.layer.masksToBounds = true
-        button.layer.cornerRadius = 12.0
+        button.layer.cornerRadius = 12
         button.anchor(heightConstant: Metrics.Height.fatButton)
         button.addTarget(self, action: #selector(buttonDidReceiveTouchUpInside), for: .touchUpInside)
         return button
