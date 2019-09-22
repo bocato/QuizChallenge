@@ -14,6 +14,7 @@ final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
     
     private var bottomViewButtonAction: (() -> Void)
     private var textDidReturnClosure: ((String?) -> Void)
+    private var botttomViewBottomConstraint: NSLayoutConstraint?
 
     // MARK: UI
     
@@ -99,17 +100,13 @@ final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
     
     private func setupKeyboardHandlers() {
         
-        observeKeyboardWillShowNotification(tableView) { [bottomView] keyboardSize in
+        observeKeyboardWillShowNotification(tableView) { [botttomViewBottomConstraint] keyboardSize in
             guard let keyboardHeight = keyboardSize?.height else { return }
-            ThreadUtils.runOnMainThread {
-                bottomView.bottomConstraint?.constant = keyboardHeight
-            }
+            botttomViewBottomConstraint?.constant = -keyboardHeight
         }
         
-        observeKeyboardWillHideNotification(tableView) { [bottomView] _ in
-            ThreadUtils.runOnMainThread {
-                bottomView.bottomConstraint?.constant = -Metrics.Margin.default
-            }
+        observeKeyboardWillHideNotification(tableView) { [botttomViewBottomConstraint] _ in
+            botttomViewBottomConstraint?.constant = 0
         }
         
     }
@@ -117,19 +114,9 @@ final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
     // MARK: - Layout
     
     private func addSubViews() {
-        constrainBottomView()
         constrainTopContainerStackView()
         constrainTableView()
-    }
-    
-    private func constrainBottomView() {
-        addSubview(bottomView)
-        bottomView.anchor(
-            left: leftAnchor,
-            bottom: bottomAnchor,
-            right: rightAnchor,
-            heightConstant: 140
-        )
+        constrainBottomView()
     }
     
     private func constrainTopContainerStackView() {
@@ -149,13 +136,33 @@ final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
         tableView.anchor(
             top: topContainerStackView.bottomAnchor,
             left: leftAnchor,
-            bottom: bottomView.topAnchor,
             right: rightAnchor,
             topConstant: Metrics.Margin.default,
             leftConstant: Metrics.Margin.default,
-            bottomConstant: Metrics.Margin.default,
             rightConstant: Metrics.Margin.default
         )
+    }
+    
+    private func constrainBottomView() {
+        addSubview(bottomView)
+        bottomView.anchor(
+            top: tableView.bottomAnchor,
+            left: leftAnchor,
+            right: rightAnchor,
+            topConstant: Metrics.Margin.default,
+            heightConstant: 140
+        )
+        let bottomConstraint = NSLayoutConstraint(
+            item: bottomView,
+            attribute: .bottom,
+            relatedBy: .equal,
+            toItem: self,
+            attribute: .bottom,
+            multiplier: 1,
+            constant: 0
+        )
+        botttomViewBottomConstraint = bottomConstraint
+        NSLayoutConstraint.activate([bottomConstraint])
     }
     
     // MARK: Public Functions
