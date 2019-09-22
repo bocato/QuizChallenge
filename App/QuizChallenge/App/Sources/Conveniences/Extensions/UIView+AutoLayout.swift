@@ -147,4 +147,36 @@ extension UIView {
         return self.bottomAnchor
     }
     
+    /// Returns the bottom constraint, and updates when it is changed
+    var bottomConstraint: NSLayoutConstraint? {
+        get {
+            return constraints.first(where: { $0.firstAttribute == .bottom && $0.relation == .equal })
+        }
+        set { setNeedsLayout() }
+    }
+    
+    /// Returns the top constraint, and updates when changes
+    var topConstraint: NSLayoutConstraint? {
+        get {
+            return constraints.first(where: { $0.firstAttribute == .top && $0.relation == .equal })
+        }
+        set { setNeedsLayout() }
+    }
+    
+    /// Returns the right constraint, and updates when it is changed
+    var rightConstraint: NSLayoutConstraint? {
+        get {
+            return constraints.first(where: { $0.firstAttribute == .right && $0.relation == .equal })
+        }
+        set { setNeedsLayout() }
+    }
+    
+    /// Returns the left constraint, and updates when it is changed
+    var leftConstraint: NSLayoutConstraint? {
+        get {
+            return constraints.first(where: { $0.firstAttribute == .left && $0.relation == .equal })
+        }
+        set { setNeedsLayout() }
+    }
+    
 }

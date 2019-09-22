@@ -125,6 +125,21 @@ extension KeywordsViewController: KeywordsViewModelBinding {
         
     }
     
+    func shouldShowWinnerModalWithData(_ modalData: SimpleModalViewData) {
+        
+        let buttonActionHandler: (() -> Void) = { [viewModel] in
+            viewModel.resetQuiz()
+        }
+        
+        modalHelper.showAlert(
+            inController: self,
+            data: modalData,
+            buttonActionHandler: buttonActionHandler,
+            presentationCompletion: nil
+        )
+        
+    }
+    
 }
 
 extension KeywordsViewController: UITableViewDataSource {

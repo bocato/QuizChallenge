@@ -15,6 +15,7 @@ protocol KeywordsViewModelBinding: AnyObject {
     func bottomLeftTextDidChange(_ text: String?)
     func bottomButtonTitleDidChange(_ title: String?)
     func shouldShowTimerFinishedModalWithData(_ modalData: SimpleModalViewData)
+    func shouldShowWinnerModalWithData(_ modalData: SimpleModalViewData)
 }
 
 protocol KeywordsViewModelDisplayLogic {
@@ -38,6 +39,7 @@ final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
     let countDownTimer: CountDownTimerProtocol
     let fetchQuizUseCase: FetchQuizUseCaseProvider
     let countDownFormatter: CountDownFormatting
+    private(set) var countRightAnswersUseCase: CountRightAnswersUseCaseProtocol
     
     // MARK: - Binding
     
@@ -46,8 +48,23 @@ final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
     
     // MARK: - Private Properties
     
-    private var possibleAnswers = [QuizViewData.Item]()
-    private var userAnswers = [String]()
+    private var possibleAnswers = [QuizViewData.Item]() {
+        didSet {
+            countRightAnswersUseCase = CountRightAnswersUseCase(possibleAnswers: possibleAnswers)
+        }
+    }
+    private var bottomLeftTextString: String {
+        return String(format: "%02d", safeNumberOfRightAnswers) + "/" + String(format: "%02d", possibleAnswers.count)
+    }
+    
+    // MARK: - Computed Properties
+    
+    private var safeNumberOfRightAnswers: Int {
+        return numberOfRightAnswers ?? 0
+    }
+    private var userDidWin: Bool {
+        return numberOfRightAnswers == possibleAnswers.count
+    }
     
     // MARK: - View Properties / Binding
     
@@ -68,12 +85,18 @@ final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
     }
     private var bottomLeftText: String? {
         didSet {
-            viewModelBinder?.bottomLeftTextDidChange(bottomLeftText)
+            viewModelBinder?.bottomLeftTextDidChange(bottomLeftTextString)
         }
     }
     private var bottomButtonTitle: String? {
         didSet {
             viewModelBinder?.bottomButtonTitleDidChange(bottomButtonTitle)
+        }
+    }
+    private var numberOfRightAnswers: Int? {
+        didSet {
+            viewModelBinder?.bottomLeftTextDidChange(bottomLeftTextString)
+            showWinnerModalIfNeeded()
         }
     }
     
@@ -83,12 +106,14 @@ final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
         timerPeriod: Int = 5,//300,
         countDownTimer: CountDownTimerProtocol = CountDownTimer(),
         fetchQuizUseCase: FetchQuizUseCaseProvider,
-        countDownFormatter: CountDownFormatting = CountDownFormatter()
+        countDownFormatter: CountDownFormatting = CountDownFormatter(),
+        countRightAnswersUseCase: CountRightAnswersUseCaseProtocol = CountRightAnswersUseCase()
     ) {
         self.timerPeriod = timerPeriod
         self.countDownTimer = countDownTimer
         self.fetchQuizUseCase = fetchQuizUseCase
         self.countDownFormatter = countDownFormatter
+        self.countRightAnswersUseCase = countRightAnswersUseCase
     }
     
     // MARK: - Display Logic
@@ -97,7 +122,7 @@ final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
         viewTitle = ""
         textFieldPlaceholder = "Insert Word"
         bottomButtonTitle = "Start"
-        bottomLeftText = "00/00"
+        bottomLeftText = bottomLeftTextString
         bottomRightText = countDownFormatter.formatToMinutes(from: timerPeriod)
         loadQuizData()
     }
@@ -144,12 +169,7 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
     }
     
     func verifyTextFieldInput(_ input: String) {
-        let capitalizedInput = input.capitalized
-        let containsInput = possibleAnswers.contains(where: { $0.text.capitalized == capitalizedInput })
-        let isNotOnUserAnswers = userAnswers.contains(where: { $0 == capitalizedInput } ) == false
-        if containsInput && isNotOnUserAnswers {
-            userAnswers.append(capitalizedInput)
-        }
+        numberOfRightAnswers = countRightAnswersUseCase.execute(input: input)
     }
     
     // MARK: - FetchQuizUseCase Handlers
@@ -181,7 +201,7 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
         }
         
         countDownTimer.dispatch(
-            for: timerPeriod,
+            forTimePeriod: timerPeriod,
             timeInterval: 1.0,
             onTick: onTick,
             onFinish: onFinish
@@ -190,25 +210,51 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
     }
     
     private func handleTimerFinish() {
-        let message = self.buildTimerModalData()
-        self.viewModelBinder?.shouldShowTimerFinishedModalWithData(message)
+        if userDidWin {
+            showWinnerModal()
+        } else {
+            showTimeIsUpModal()
+        }
         resetTimerInfo()
     }
     
     private func resetTimerInfo() {
-        self.bottomButtonTitle = "Start"
-        self.bottomRightText = self.countDownFormatter.formatToMinutes(from: self.timerPeriod)
+        bottomButtonTitle = "Start"
+        bottomRightText = countDownFormatter.formatToMinutes(from: self.timerPeriod)
     }
     
-    private func buildTimerModalData() -> SimpleModalViewData {
+    private func showTimeIsUpModal() {
         let title = "Time finished"
-        let subtitle = "Sorry, time is up! You got \(userAnswers.count) out of \(possibleAnswers.count) answers."
+        let subtitle = "Sorry, time is up! You got \(safeNumberOfRightAnswers) out of \(possibleAnswers.count) answers."
         let buttonText = "Try Again"
-        return SimpleModalViewData(
+        let modalData = SimpleModalViewData(
             title: title,
             subtitle: subtitle,
             buttonText: buttonText
         )
+        viewModelBinder?.shouldShowTimerFinishedModalWithData(modalData)
+    }
+    
+    private func showWinnerModal() {
+    
+        countDownTimer.stop()
+        
+        let title = "Contgratulations"
+        let subtitle = "Good job"
+        let buttonText = "Play Again"
+        let modalData =  SimpleModalViewData(
+            title: title,
+            subtitle: subtitle,
+            buttonText: buttonText
+        )
+        
+        viewModelBinder?.shouldShowWinnerModalWithData(modalData)
+    }
+    
+    private func showWinnerModalIfNeeded() {
+        if userDidWin && countDownTimer.isRunning {
+            showWinnerModal()
+        }
     }
     
 }

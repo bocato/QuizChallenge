@@ -39,7 +39,7 @@ final class FetchQuizUseCase: FetchQuizUseCaseProvider {
         quizService.getQuiz { (result) in
             do {
                 let response = try result.get()
-                let items = response.answer.map { QuizViewData.Item(text: $0.capitalizingFirstLetter() ) }
+                let items = response.answer.map { QuizViewData.Item(text: $0.capitalizingFirstLetter()) }
                 let viewData = QuizViewData(title: response.question, items: items)
                 completion(.data(viewData))
             } catch {

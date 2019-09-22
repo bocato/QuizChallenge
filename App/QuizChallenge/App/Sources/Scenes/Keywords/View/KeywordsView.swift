@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class KeywordsView: UIView {
+final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
    
     // MARK: - Private Properties
     
@@ -97,6 +97,24 @@ final class KeywordsView: UIView {
     private func setup() {
         backgroundColor = .white
         addSubViews()
+        setupKeyboardHandlers()
+    }
+    
+    private func setupKeyboardHandlers() {
+        
+        observeKeyboardWillShowNotification(tableView) { [bottomView] keyboardSize in
+            guard let keyboardHeight = keyboardSize?.height else { return }
+            ThreadUtils.runOnMainThread {
+                bottomView.bottomConstraint?.constant = -keyboardHeight
+            }
+        }
+        
+        observeKeyboardWillHideNotification(tableView) { [bottomView] _ in
+            ThreadUtils.runOnMainThread {
+                bottomView.bottomConstraint?.constant = -Metrics.Margin.default
+            }
+        }
+        
     }
     
     // MARK: - Layout
