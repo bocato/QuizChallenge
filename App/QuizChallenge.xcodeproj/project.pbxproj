@@ -29,7 +29,6 @@
 		E57891982336639400CB5849 /* StackViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891972336639400CB5849 /* StackViewBuilder.swift */; };
 		E578919A2336665200CB5849 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891992336665200CB5849 /* Metrics.swift */; };
 		E57891B32336915000CB5849 /* CountDownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891B22336915000CB5849 /* CountDownTimer.swift */; };
-		E57891C42336981000CB5849 /* ViewStateRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891C32336981000CB5849 /* ViewStateRendering.swift */; };
 		E57891C623369C5400CB5849 /* UseCaseEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891C523369C5300CB5849 /* UseCaseEvent.swift */; };
 		E57891E32336AB7400CB5849 /* QuizTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891E22336AB7400CB5849 /* QuizTableViewCell.swift */; };
 		E57891E72336AD3300CB5849 /* SF-Pro-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E57891E42336AD3300CB5849 /* SF-Pro-Display-Semibold.otf */; };
@@ -47,6 +46,9 @@
 		E578922223371A7E00CB5849 /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578922123371A7E00CB5849 /* StringExtensionTests.swift */; };
 		E578922823378F0B00CB5849 /* CountRightAnswersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578922723378F0B00CB5849 /* CountRightAnswersUseCase.swift */; };
 		E578922C23379A9C00CB5849 /* ScrollableContentKeyboardObserving.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578922B23379A9C00CB5849 /* ScrollableContentKeyboardObserving.swift */; };
+		E578922E2337B2B100CB5849 /* LoadingPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578922D2337B2B100CB5849 /* LoadingPresentable.swift */; };
+		E57892342337B32000CB5849 /* ViewStateRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57892332337B32000CB5849 /* ViewStateRendering.swift */; };
+		E57892372337B33800CB5849 /* QuizLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57892362337B33800CB5849 /* QuizLoadingView.swift */; };
 		E5CE4246233446D800295277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE4245233446D800295277 /* AppDelegate.swift */; };
 		E5CE424D233446D900295277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5CE424C233446D900295277 /* Assets.xcassets */; };
 		E5CE4250233446D900295277 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5CE424E233446D900295277 /* LaunchScreen.storyboard */; };
@@ -85,7 +87,6 @@
 		E57891972336639400CB5849 /* StackViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewBuilder.swift; sourceTree = "<group>"; };
 		E57891992336665200CB5849 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
 		E57891B22336915000CB5849 /* CountDownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CountDownTimer.swift; path = ../../../../../../../../../Documents/CountDownTimer.swift; sourceTree = "<group>"; };
-		E57891C32336981000CB5849 /* ViewStateRendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewStateRendering.swift; path = ../../../../../../../../../Documents/ViewStateRendering.swift; sourceTree = "<group>"; };
 		E57891C523369C5300CB5849 /* UseCaseEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseCaseEvent.swift; sourceTree = "<group>"; };
 		E57891E22336AB7400CB5849 /* QuizTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTableViewCell.swift; sourceTree = "<group>"; };
 		E57891E42336AD3300CB5849 /* SF-Pro-Display-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Semibold.otf"; sourceTree = "<group>"; };
@@ -103,6 +104,9 @@
 		E578922123371A7E00CB5849 /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		E578922723378F0B00CB5849 /* CountRightAnswersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountRightAnswersUseCase.swift; sourceTree = "<group>"; };
 		E578922B23379A9C00CB5849 /* ScrollableContentKeyboardObserving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableContentKeyboardObserving.swift; sourceTree = "<group>"; };
+		E578922D2337B2B100CB5849 /* LoadingPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingPresentable.swift; sourceTree = "<group>"; };
+		E57892332337B32000CB5849 /* ViewStateRendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewStateRendering.swift; sourceTree = "<group>"; };
+		E57892362337B33800CB5849 /* QuizLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizLoadingView.swift; sourceTree = "<group>"; };
 		E5CE4242233446D800295277 /* QuizChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5CE4245233446D800295277 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5CE424C233446D900295277 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -216,11 +220,8 @@
 		E578917B2336503400CB5849 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				E578917C2336504D00CB5849 /* CustomViewController.swift */,
-				E57891972336639400CB5849 /* StackViewBuilder.swift */,
-				E57891C32336981000CB5849 /* ViewStateRendering.swift */,
-				E57892042336C96900CB5849 /* ModalHelper.swift */,
-				E578922B23379A9C00CB5849 /* ScrollableContentKeyboardObserving.swift */,
+				E57892352337B32700CB5849 /* Components */,
+				E578922F2337B2E000CB5849 /* Utils */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -327,6 +328,27 @@
 				E578922723378F0B00CB5849 /* CountRightAnswersUseCase.swift */,
 			);
 			path = CountRightAnswersUseCase;
+			sourceTree = "<group>";
+		};
+		E578922F2337B2E000CB5849 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E57892332337B32000CB5849 /* ViewStateRendering.swift */,
+				E578917C2336504D00CB5849 /* CustomViewController.swift */,
+				E57891972336639400CB5849 /* StackViewBuilder.swift */,
+				E57892042336C96900CB5849 /* ModalHelper.swift */,
+				E578922B23379A9C00CB5849 /* ScrollableContentKeyboardObserving.swift */,
+				E578922D2337B2B100CB5849 /* LoadingPresentable.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		E57892352337B32700CB5849 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E57892362337B33800CB5849 /* QuizLoadingView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		E5CE4239233446D800295277 = {
@@ -521,6 +543,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E57891842336511F00CB5849 /* KeywordsView.swift in Sources */,
+				E578922E2337B2B100CB5849 /* LoadingPresentable.swift in Sources */,
 				E578916523363C9000CB5849 /* UIView+AutoLayout.swift in Sources */,
 				E578918E233656AA00CB5849 /* AppDelegate+Factories.swift in Sources */,
 				E57891FC2336C12A00CB5849 /* FetchQuizUseCase.swift in Sources */,
@@ -534,11 +557,12 @@
 				E578915C233639A900CB5849 /* Environment.swift in Sources */,
 				E57891B32336915000CB5849 /* CountDownTimer.swift in Sources */,
 				E57891982336639400CB5849 /* StackViewBuilder.swift in Sources */,
+				E57892372337B33800CB5849 /* QuizLoadingView.swift in Sources */,
 				E57891E32336AB7400CB5849 /* QuizTableViewCell.swift in Sources */,
 				E5CE4246233446D800295277 /* AppDelegate.swift in Sources */,
 				E578917A2336463900CB5849 /* QuizRequest.swift in Sources */,
+				E57892342337B32000CB5849 /* ViewStateRendering.swift in Sources */,
 				E578922823378F0B00CB5849 /* CountRightAnswersUseCase.swift in Sources */,
-				E57891C42336981000CB5849 /* ViewStateRendering.swift in Sources */,
 				E57891F02336AE0700CB5849 /* UIFont+Quiz.swift in Sources */,
 				E578917D2336504D00CB5849 /* CustomViewController.swift in Sources */,
 				E578918C2336551700CB5849 /* KeywordsConfigurator.swift in Sources */,

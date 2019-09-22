@@ -9,7 +9,7 @@
 import Foundation
 
 protocol CountRightAnswersUseCaseProtocol {
-    func execute(input: String) -> Int
+    func execute(input: String?) -> Int
 }
 
 final class CountRightAnswersUseCase: CountRightAnswersUseCaseProtocol {
@@ -21,7 +21,8 @@ final class CountRightAnswersUseCase: CountRightAnswersUseCaseProtocol {
         self.possibleAnswers = possibleAnswers
     }
     
-    func execute(input: String) -> Int {
+    func execute(input: String?) -> Int {
+        guard let input = input else { return userAnswers.count }
         let capitalizedInput = input.capitalized
         let containsInput = possibleAnswers.contains(where: { $0.text.capitalized == capitalizedInput })
         let isNotOnUserAnswers = userAnswers.contains(where: { $0 == capitalizedInput } ) == false

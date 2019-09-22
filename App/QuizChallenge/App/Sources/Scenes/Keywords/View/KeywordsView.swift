@@ -13,7 +13,7 @@ final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
     // MARK: - Private Properties
     
     private var bottomViewButtonAction: (() -> Void)
-    private var textFieldEditingDidEndClosure: ((_ newText: String?) -> Void)
+    private var textDidReturnClosure: ((String?) -> Void)
 
     // MARK: UI
     
@@ -27,16 +27,13 @@ final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
     private lazy var textField: UITextField = {
         let textField = UITextField(frame: .zero)
         textField.borderStyle = .none
-        textField.placeholder = "Insert Word"
         textField.backgroundColor = .quizGray
         textField.layer.cornerRadius = 12
         textField.addPadding(left: 12, right: 12)
         textField.anchor(heightConstant: Metrics.Height.textField)
-        textField.addTarget(self, action: #selector(textFieldEditingDidEnd), for: .editingDidEnd)
+        textField.delegate = self
         return textField
     }()
-    
-    private let refreshControl = UIRefreshControl()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -78,10 +75,10 @@ final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
     init(
         tableViewDataSource: UITableViewDataSource,
         bottomViewButtonAction: @escaping (() -> Void),
-        textFieldEditingDidEndClosure: @escaping((_ newText: String?) -> Void)
+        textDidReturnClosure: @escaping((String?) -> Void)
     ) {
         self.bottomViewButtonAction = bottomViewButtonAction
-        self.textFieldEditingDidEndClosure = textFieldEditingDidEndClosure
+        self.textDidReturnClosure = textDidReturnClosure
         super.init(frame: UIScreen.main.bounds)
         self.tableView.dataSource = tableViewDataSource
         setup()
@@ -102,18 +99,18 @@ final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
     
     private func setupKeyboardHandlers() {
         
-        observeKeyboardWillShowNotification(tableView) { [bottomView] keyboardSize in
-            guard let keyboardHeight = keyboardSize?.height else { return }
-            ThreadUtils.runOnMainThread {
-                bottomView.bottomConstraint?.constant = -keyboardHeight
-            }
-        }
+//        observeKeyboardWillShowNotification(tableView) { [bottomView] keyboardSize in
+//            guard let keyboardHeight = keyboardSize?.height else { return }
+//            ThreadUtils.runOnMainThread {
+//                bottomView.bottomConstraint?.constant = -keyboardHeight
+//            }
+//        }
         
-        observeKeyboardWillHideNotification(tableView) { [bottomView] _ in
-            ThreadUtils.runOnMainThread {
-                bottomView.bottomConstraint?.constant = -Metrics.Margin.default
-            }
-        }
+//        observeKeyboardWillHideNotification(tableView) { [bottomView] _ in
+//            ThreadUtils.runOnMainThread {
+//                bottomView.bottomConstraint?.constant = -Metrics.Margin.default
+//            }
+//        }
         
     }
     
@@ -210,9 +207,14 @@ final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
     private func bottomViewButtonDidReceiveTouchUpInside() {
         bottomViewButtonAction()
     }
-    
-    @objc private func textFieldEditingDidEnd(){
-        textFieldEditingDidEndClosure(textField.text)
-    }
 
+}
+extension KeywordsView: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textDidReturnClosure(textField.text)
+        textField.text = ""
+        return true
+    }
+    
 }

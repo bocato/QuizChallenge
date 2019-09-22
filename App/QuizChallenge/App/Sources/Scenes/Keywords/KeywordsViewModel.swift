@@ -16,6 +16,7 @@ protocol KeywordsViewModelBinding: AnyObject {
     func bottomButtonTitleDidChange(_ title: String?)
     func shouldShowTimerFinishedModalWithData(_ modalData: SimpleModalViewData)
     func shouldShowWinnerModalWithData(_ modalData: SimpleModalViewData)
+    func showErrorModalWithData(_ modalData: SimpleModalViewData)
 }
 
 protocol KeywordsViewModelDisplayLogic {
@@ -28,7 +29,7 @@ protocol KeywordsViewModelBusinessLogic {
     func loadQuizData()
     func toggleTimer()
     func resetQuiz()
-    func verifyTextFieldInput(_ input: String)
+    func verifyTextFieldInput(_ input: String?)
 }
 
 final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
@@ -168,7 +169,11 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
         loadQuizData()
     }
     
-    func verifyTextFieldInput(_ input: String) {
+    func verifyTextFieldInput(_ input: String?) {
+        guard countDownTimer.isRunning else {
+            showYouShouldStartTheTimerErrorModal()
+            return
+        }
         numberOfRightAnswers = countRightAnswersUseCase.execute(input: input)
     }
     
@@ -223,6 +228,8 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
         bottomRightText = countDownFormatter.formatToMinutes(from: self.timerPeriod)
     }
     
+    // MARK: - Modals
+    
     private func showTimeIsUpModal() {
         let title = "Time finished"
         let subtitle = "Sorry, time is up! You got \(safeNumberOfRightAnswers) out of \(possibleAnswers.count) answers."
@@ -255,6 +262,11 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
         if userDidWin && countDownTimer.isRunning {
             showWinnerModal()
         }
+    }
+    
+    private func showYouShouldStartTheTimerErrorModal() {
+        let modalData = SimpleModalViewData(title: "Ops!", subtitle: "You need to start the timer for your points to count.")
+        viewModelBinder?.showErrorModalWithData(modalData)
     }
     
 }

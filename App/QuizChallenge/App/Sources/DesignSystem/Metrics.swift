@@ -10,7 +10,11 @@ import UIKit
 
 struct Metrics {
     
+    private init() {}
+    
     struct Margin {
+        
+        private init() {}
         
         /// 0 points of spacing.
         static let none: CGFloat = 0
@@ -20,13 +24,17 @@ struct Metrics {
         
         /// 44 points of spacing.
         static let top: CGFloat = 44.0
+        
+        /// 4 points of spacing
+        static let tiny: CGFloat = 4.0
     }
     
     struct Height {
         
+        private init() {}
+        
         /// Default button height, 54 points
         static let fatButton: CGFloat = 54.0
-        
         
         // Default TextField height, 60 points
         static let textField: CGFloat = 54.0

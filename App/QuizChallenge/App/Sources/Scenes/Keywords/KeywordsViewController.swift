@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class KeywordsViewController: UIViewController, CustomViewController {
+final class KeywordsViewController: UIViewController, CustomViewController, LoadingPresentable {
     
     // MARK: - Aliases
     
@@ -54,16 +54,26 @@ final class KeywordsViewController: UIViewController, CustomViewController {
             viewModel.toggleTimer()
         }
         
-        let textFieldEditingDidEndClosure: ((String?) -> Void) = { newText in
-            debugPrint("newText = \(newText)")
+        let textDidReturnClosure: ((String?) -> Void) = { [viewModel] newText in
+            viewModel.verifyTextFieldInput(newText)
         }
         
         view = CustomView(
             tableViewDataSource: self,
             bottomViewButtonAction: bottomViewButtonAction,
-            textFieldEditingDidEndClosure: textFieldEditingDidEndClosure
+            textDidReturnClosure: textDidReturnClosure
         )
         
+    }
+    
+    // MARK: - Helpers
+    private func showErrorModal(_ data: SimpleModalViewData) {
+        modalHelper.showAlert(
+            inController: self,
+            data: data,
+            buttonActionHandler: nil,
+            presentationCompletion: nil
+        )
     }
 
 }
@@ -74,21 +84,35 @@ extension KeywordsViewController: ViewStateRendering {
     func render(_ state: ViewState) {
         switch state {
         case .loading:
-            debugPrint("render: \(state)")
+            showLoading()
         case .content:
+            hideLoading()
             customView.reloadTableView()
             customView.showTableView()
-        case let .error(withFiller: filler):
-            debugPrint("render: \(filler.debugDescription)")
+        case let .error(filler):
+            hideLoading()
+            renderError(filler)
         default:
             return
         }
         
     }
+    
+    private func renderError(_ filler: ViewFiller?) {
+        guard let title = filler?.title, let subtitle = filler?.subtitle else { return }
+        let data = SimpleModalViewData(title: title, subtitle: subtitle)
+        showErrorModal(data)
+    }
+    
+    
 }
 
 // MARK: - KeywordsViewModelBinding
 extension KeywordsViewController: KeywordsViewModelBinding {
+    
+    func showErrorModalWithData(_ modalData: SimpleModalViewData) {
+        showErrorModal(modalData)
+    }
     
     func viewTitleDidChange(_ title: String?) {
         customView.setTitle(title)
