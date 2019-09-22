@@ -99,18 +99,18 @@ final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
     
     private func setupKeyboardHandlers() {
         
-//        observeKeyboardWillShowNotification(tableView) { [bottomView] keyboardSize in
-//            guard let keyboardHeight = keyboardSize?.height else { return }
-//            ThreadUtils.runOnMainThread {
-//                bottomView.bottomConstraint?.constant = -keyboardHeight
-//            }
-//        }
+        observeKeyboardWillShowNotification(tableView) { [bottomView] keyboardSize in
+            guard let keyboardHeight = keyboardSize?.height else { return }
+            ThreadUtils.runOnMainThread {
+                bottomView.bottomConstraint?.constant = keyboardHeight
+            }
+        }
         
-//        observeKeyboardWillHideNotification(tableView) { [bottomView] _ in
-//            ThreadUtils.runOnMainThread {
-//                bottomView.bottomConstraint?.constant = -Metrics.Margin.default
-//            }
-//        }
+        observeKeyboardWillHideNotification(tableView) { [bottomView] _ in
+            ThreadUtils.runOnMainThread {
+                bottomView.bottomConstraint?.constant = -Metrics.Margin.default
+            }
+        }
         
     }
     

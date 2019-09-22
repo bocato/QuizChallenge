@@ -104,7 +104,6 @@ extension KeywordsViewController: ViewStateRendering {
         showErrorModal(data)
     }
     
-    
 }
 
 // MARK: - KeywordsViewModelBinding
