@@ -40,7 +40,7 @@ final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
     let countDownTimer: CountDownTimerProtocol
     let fetchQuizUseCase: FetchQuizUseCaseProvider
     let countDownFormatter: CountDownFormatting
-    private(set) var countRightAnswersUseCase: CountRightAnswersUseCaseProtocol
+    private(set) var countRightAnswersUseCase: CountRightAnswersUseCaseProvider
     
     // MARK: - Binding
     
@@ -108,7 +108,7 @@ final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
         countDownTimer: CountDownTimerProtocol = CountDownTimer(),
         fetchQuizUseCase: FetchQuizUseCaseProvider,
         countDownFormatter: CountDownFormatting = CountDownFormatter(),
-        countRightAnswersUseCase: CountRightAnswersUseCaseProtocol = CountRightAnswersUseCase()
+        countRightAnswersUseCase: CountRightAnswersUseCaseProvider = CountRightAnswersUseCase()
     ) {
         self.timerPeriod = timerPeriod
         self.countDownTimer = countDownTimer

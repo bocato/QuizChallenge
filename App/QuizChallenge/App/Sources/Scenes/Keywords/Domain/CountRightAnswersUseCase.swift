@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol CountRightAnswersUseCaseProtocol {
+protocol CountRightAnswersUseCaseProvider {
     func execute(input: String?) -> Int
 }
 
-final class CountRightAnswersUseCase: CountRightAnswersUseCaseProtocol {
+final class CountRightAnswersUseCase: CountRightAnswersUseCaseProvider {
     
     private let possibleAnswers: [QuizViewData.Item]
     private var userAnswers = [String]()

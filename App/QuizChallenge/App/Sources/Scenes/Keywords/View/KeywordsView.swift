@@ -148,9 +148,7 @@ final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
         bottomView.anchor(
             top: tableView.bottomAnchor,
             left: leftAnchor,
-            right: rightAnchor,
-            topConstant: Metrics.Margin.default,
-            heightConstant: 140
+            right: rightAnchor
         )
         let bottomConstraint = NSLayoutConstraint(
             item: bottomView,
