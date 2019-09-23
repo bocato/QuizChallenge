@@ -68,8 +68,8 @@ final class KeywordsViewModelTests: XCTestCase {
             answer: ["a", "b", "c"]
         )
         let resultToReturn: Result<QuizEntity, QuizServiceError> = .success(quizEntityToReturn)
-        let quizService = QuizServiceStub(resultToReturn: resultToReturn)
-        let fetchQuizUseCase = FetchQuizUseCase(quizService: quizService)
+        let quizServiceStub = QuizServiceStub(resultToReturn: resultToReturn)
+        let fetchQuizUseCase = FetchQuizUseCase(quizService: quizServiceStub)
         let sut = KeywordsViewModel(fetchQuizUseCase: fetchQuizUseCase)
         sut.onViewDidLoad()
         
@@ -96,8 +96,8 @@ final class KeywordsViewModelTests: XCTestCase {
         )
         let expectedBottomLeftText = "00/01"
         let resultToReturn: Result<QuizEntity, QuizServiceError> = .success(quizEntityToReturn)
-        let quizService = QuizServiceStub(resultToReturn: resultToReturn)
-        let fetchQuizUseCase = FetchQuizUseCase(quizService: quizService)
+        let quizServiceStub = QuizServiceStub(resultToReturn: resultToReturn)
+        let fetchQuizUseCase = FetchQuizUseCase(quizService: quizServiceStub)
         let sut = KeywordsViewModel(fetchQuizUseCase: fetchQuizUseCase)
         sut.viewModelBinder = viewModelBinderSpy
         sut.viewStateRenderer = viewStateRendererSpy
@@ -132,8 +132,8 @@ final class KeywordsViewModelTests: XCTestCase {
         let expectedViewFiller = ViewFiller(title: "Ooops!", subtitle: "Something wrong has happened")
         let errorToReturn: QuizServiceError = .networking(.unknown)
         let resultToReturn: Result<QuizEntity, QuizServiceError> = .failure(errorToReturn)
-        let quizService = QuizServiceStub(resultToReturn: resultToReturn)
-        let fetchQuizUseCase = FetchQuizUseCase(quizService: quizService)
+        let quizServiceStub = QuizServiceStub(resultToReturn: resultToReturn)
+        let fetchQuizUseCase = FetchQuizUseCase(quizService: quizServiceStub)
         let sut = KeywordsViewModel(fetchQuizUseCase: fetchQuizUseCase)
         sut.viewModelBinder = viewModelBinderSpy
         sut.viewStateRenderer = viewStateRendererSpy
@@ -157,12 +157,54 @@ final class KeywordsViewModelTests: XCTestCase {
         XCTAssertEqual(viewFiller?.subtitle, expectedViewFiller.subtitle, "Expected \(expectedViewFiller.subtitle ?? ""), but got \(viewFiller?.subtitle ?? "").")
     }
     
-    func test_whenToggleTimerIsCalledAndTimerIsNotRunning_timerShouldStartAndReflectOnView() {
+    func test_whenToggleTimerIsCalledAndTimerIsNotRunning_timerShouldBeRestarted() {
+        // Given
+        let countDownTimerProviderStubSpy = CountDownTimerProviderStubSpy()
+        countDownTimerProviderStubSpy.isRunningToReturn = true
+        let sut = KeywordsViewModel(
+            countDownTimer: countDownTimerProviderStubSpy,
+            fetchQuizUseCase: FetchQuizUseCaseProviderDummy()
+        )
+        
+        // Then
+        sut.toggleTimer()
+        
+        // When
+        XCTAssertTrue(countDownTimerProviderStubSpy.restartCalled)
+    }
+    
+    func test_whenToggleTimerIsCalledAndTimerIsRunning_timerShouldStartAndReflectOnView() {
         // Given
         let viewModelBinderSpy = KeywordsViewModelBindingSpy()
         let countDownTimerProviderStubSpy = CountDownTimerProviderStubSpy()
         countDownTimerProviderStubSpy.isRunningToReturn = false
         countDownTimerProviderStubSpy.runOnFinish = false
+        let sut = KeywordsViewModel(
+            timerPeriod: 2,
+            countDownTimer: countDownTimerProviderStubSpy,
+            fetchQuizUseCase: FetchQuizUseCaseProviderDummy()
+        )
+        sut.viewModelBinder = viewModelBinderSpy
+
+        // Then
+        sut.toggleTimer()
+
+        // When
+        XCTAssertTrue(viewModelBinderSpy.bottomButtonTitleDidChangeCalled, "Expected `bottomButtonTitleDidChange` to be called.")
+        XCTAssertEqual(viewModelBinderSpy.titlePassedToBottomButtonTitleDidChange, "Reset", "Expected `Reset`, but got \(viewModelBinderSpy.titlePassedToBottomButtonTitleDidChange.debugDescription)")
+
+        XCTAssertTrue(viewModelBinderSpy.bottomRightTextDidChangeCalled, "Expected `bottomRightTextDidChange` to be called.")
+        XCTAssertEqual(viewModelBinderSpy.bottomRightTextDidChangeValuesAcumulated.count, 2, "Expected to receive 2 values.")
+        XCTAssertEqual(viewModelBinderSpy.textPassedToBottomRightTextDidChange, "00:01", "Expected to receive `00:01` as the last value, but got \(viewModelBinderSpy.textPassedToBottomRightTextDidChange ?? "").")
+
+    }
+    
+    func test_whenToggleTimerIsCalledAndTimerIsRunning_timerShouldStartAndShowTimeIsUpAndTimerInfoShouldBeReset() {
+        // Given
+        let viewModelBinderSpy = KeywordsViewModelBindingSpy()
+        let countDownTimerProviderStubSpy = CountDownTimerProviderStubSpy()
+        countDownTimerProviderStubSpy.isRunningToReturn = false
+        countDownTimerProviderStubSpy.runOnFinish = true
         let sut = KeywordsViewModel(
             timerPeriod: 1,
             countDownTimer: countDownTimerProviderStubSpy,
@@ -174,15 +216,73 @@ final class KeywordsViewModelTests: XCTestCase {
         sut.toggleTimer()
         
         // When
-        XCTAssertTrue(viewModelBinderSpy.bottomButtonTitleDidChangeCalled, "Expected `bottomButtonTitleDidChange` to be called.")
-        XCTAssertEqual(viewModelBinderSpy.titlePassedToBottomButtonTitleDidChange, "Reset", "Expected `Reset`, but got \(viewModelBinderSpy.titlePassedToBottomButtonTitleDidChange.debugDescription)")
+        XCTAssertTrue(viewModelBinderSpy.showTimerFinishedModalWithDataCalled, "`showTimerFinishedModalWithData` should have been called.")
         
-        XCTAssertTrue(viewModelBinderSpy.bottomRightTextDidChangeCalled, "Expected `bottomRightTextDidChange` to be called.")
-        XCTAssertEqual(viewModelBinderSpy.bottomRightTextDidChangeValuesAcumulated.count, 3, "Expected to receive 3 values.")
-        XCTAssertEqual(viewModelBinderSpy.bottomRightTextDidChangeValuesAcumulated[1], "Reset", "Expected `Reset`, but found \(viewModelBinderSpy.bottomRightTextDidChangeValuesAcumulated[1] ?? "").")
+        XCTAssertTrue(viewModelBinderSpy.bottomButtonTitleDidChangeCalled, "`bottomButtonTitleDidChange` should have been called.")
+        XCTAssertEqual(viewModelBinderSpy.titlePassedToBottomButtonTitleDidChange, "Start", "Expected `Start``, but got \(viewModelBinderSpy.titlePassedToBottomButtonTitleDidChange ?? "").")
         
+        XCTAssertTrue(viewModelBinderSpy.bottomRightTextDidChangeCalled, "`bottomRightTextDidChange` should have been called.")
+        XCTAssertEqual(viewModelBinderSpy.textPassedToBottomRightTextDidChange, "00:01", "Expected `00:01`, but got \(viewModelBinderSpy.textPassedToBottomRightTextDidChange ?? "").")
     }
-
+    
+    func test_whenToggleTimerIsCalledAndTimerIsRunning_timerShouldStartAndShowWinnerModal() {
+        // Given
+        let viewModelBinderSpy = KeywordsViewModelBindingSpy()
+        let countDownTimerProviderStubSpy = CountDownTimerProviderStubSpy()
+        countDownTimerProviderStubSpy.isRunningToReturn = true
+        countDownTimerProviderStubSpy.runOnFinish = true
+        let quizEntityToReturn = QuizEntity(
+            question: "Some question",
+            answer: ["a"]
+        )
+        let resultToReturn: Result<QuizEntity, QuizServiceError> = .success(quizEntityToReturn)
+        let quizServiceStub = QuizServiceStub(resultToReturn: resultToReturn)
+        let fetchQuizUseCase = FetchQuizUseCase(quizService: quizServiceStub)
+        let sut = KeywordsViewModel(
+            timerPeriod: 1,
+            countDownTimer: countDownTimerProviderStubSpy,
+            fetchQuizUseCase: fetchQuizUseCase
+        )
+        sut.viewModelBinder = viewModelBinderSpy
+        sut.loadQuizData()
+        sut.verifyTextFieldInput("a")
+        
+        // Then
+        sut.toggleTimer()
+        
+        // When
+        XCTAssertTrue(viewModelBinderSpy.showWinnerModalWithDataCalled, "`showWinnerModalWithData` should have been called.")
+    }
+    
+    func test_whenToggleTimerIsCalledAndTimerIsRunning_timerShouldStartAndShowErrorModal() {
+        // Given
+        let viewModelBinderSpy = KeywordsViewModelBindingSpy()
+        let countDownTimerProviderStubSpy = CountDownTimerProviderStubSpy()
+        countDownTimerProviderStubSpy.isRunningToReturn = false
+        countDownTimerProviderStubSpy.runOnFinish = true
+        let quizEntityToReturn = QuizEntity(
+            question: "Some question",
+            answer: ["a"]
+        )
+        let resultToReturn: Result<QuizEntity, QuizServiceError> = .success(quizEntityToReturn)
+        let quizServiceStub = QuizServiceStub(resultToReturn: resultToReturn)
+        let fetchQuizUseCase = FetchQuizUseCase(quizService: quizServiceStub)
+        let sut = KeywordsViewModel(
+            timerPeriod: 1,
+            countDownTimer: countDownTimerProviderStubSpy,
+            fetchQuizUseCase: fetchQuizUseCase
+        )
+        sut.viewModelBinder = viewModelBinderSpy
+        sut.loadQuizData()
+        sut.verifyTextFieldInput("a")
+        
+        // Then
+        sut.toggleTimer()
+        
+        // When
+        XCTAssertTrue(viewModelBinderSpy.showErrorModalWithDataCalled, "`showErrorModalWithData` should have been called.")
+    }
+    
 }
 
 // MARK: - Testing Helpers
@@ -330,13 +430,18 @@ private final class CountDownTimerProviderStubSpy: CountDownTimerProvider {
         lastOnFinishClosure = onFinish
         isRunningToReturn = true
         
-        if runOnFinish {
+        if runOnTick {
             let step = Int(timeInterval)
             for x in stride(from: period, to: 0, by: -step) {
                 if stopWasCalled {
                     return
                 }
                 timeLeft = x
+                if timeLeft <= 0 {
+                    stop()
+                    onFinish?()
+                    return
+                }
                 onTick?(x)
             }
         }
@@ -381,23 +486,11 @@ private final class CountDownTimerProviderStubSpy: CountDownTimerProvider {
     
 }
 
-
-//private final class CountDownTimerProviderStub: CountDownTimerProvider {
-//
-//    func dispatch(
-//        forTimePeriodInSeconds period: Int,
-//        timeInterval: TimeInterval,
-//        onTick: CountDownTimerProvider.OnTickClosure?,
-//        onFinish: CountDownTimerProvider.OnFinishClosure?) {
-//        <#code#>
-//    }
-//
-//    func restart() {}
-//    func stop() {}
-//
-//    var isRunningToReturn = false
-//    var isRunning: Bool {
-//        return isRunningToReturn
-//    }
-//
-//}
+private class CountRightAnswersUseCaseProviderStub: CountRightAnswersUseCaseProvider {
+    
+    var numberOfRightAnswersToReturn = 0
+    func execute(input: String?) -> Int {
+        return numberOfRightAnswersToReturn
+    }
+    
+}

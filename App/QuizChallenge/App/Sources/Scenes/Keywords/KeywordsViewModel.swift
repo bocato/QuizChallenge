@@ -41,7 +41,7 @@ protocol KeywordsViewModelDisplayLogic {
 protocol KeywordsViewModelBusinessLogic {
     
     /// Loads the quiz data from the necessary dataSources
-    func loadQuizData()
+    func loadQuizData(_ onSuccess: (() -> Void)?)
     
     /// Toggles the timer on and off
     func toggleTimer()
@@ -87,7 +87,7 @@ final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
         return numberOfRightAnswers ?? 0
     }
     private var userDidWin: Bool {
-        return numberOfRightAnswers == possibleAnswers.count
+        return safeNumberOfRightAnswers > 0 && safeNumberOfRightAnswers == possibleAnswers.count
     }
     
     // MARK: - View Properties / Binding
@@ -168,7 +168,7 @@ final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
 // MARK: - KeywordsViewModelBusinessLogic
 extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
     
-    func loadQuizData() {
+    func loadQuizData(_ onSuccess: (() -> Void)? = nil) {
         fetchQuizUseCase.execute { [weak self] event in
             switch event.status {
             case let .data(viewData):
@@ -193,7 +193,9 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
     
     func resetQuiz() {
         resetTimerInfo()
-        loadQuizData()
+        loadQuizData { [countDownTimer] in
+            countDownTimer.stop()
+        }
     }
     
     func verifyTextFieldInput(_ input: String?) {
@@ -252,7 +254,7 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
     
     private func resetTimerInfo() {
         bottomButtonTitle = "Start"
-        bottomRightText = countDownFormatter.formatToMinutes(from: self.timerPeriod)
+        bottomRightText = countDownFormatter.formatToMinutes(from: timerPeriod)
     }
     
     // MARK: - verifyTextFieldInput Logic
