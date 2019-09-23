@@ -8,7 +8,13 @@
 
 import Foundation
 
+/// Provides an interface for the CountRightAnswersUseCase
 protocol CountRightAnswersUseCaseProvider {
+    
+    /// Counts the number of answers that were found in the `possibleAnswers`, based on the inputs received
+    ///
+    /// - Parameter input: a String value, from the user input
+    /// - Returns: the number of answers that were found in the `possibleAnswers`
     func execute(input: String?) -> Int
 }
 

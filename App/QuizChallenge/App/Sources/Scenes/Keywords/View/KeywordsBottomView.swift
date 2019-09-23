@@ -106,14 +106,17 @@ final class KeywordsBottomView: UIView {
     
     // MARK: - Public Methods
     
+    /// Sets the `leftTextLabel` text
     func setLeftText(_ text: String?) {
         leftTextLabel.text = text
     }
     
+    /// Sets the `rightTextLabel` text
     func setRightText(_ text: String?) {
         rightTextLabel.text = text
     }
     
+    /// Sets the `button` title
     func setButtonTitle(_ title: String?) {
         button.setTitle(title, for: .normal)
     }

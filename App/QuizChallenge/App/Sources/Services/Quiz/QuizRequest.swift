@@ -9,6 +9,7 @@
 import Foundation
 import Networking
 
+/// Defines the requests for the quiz endpoint
 enum QuizRequest: URLRequestProtocol {
     
     case quiz

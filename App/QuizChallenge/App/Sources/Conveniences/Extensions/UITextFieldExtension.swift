@@ -10,6 +10,12 @@ import UIKit
 
 extension UITextField {
     
+    /// Adds a padding to the textfield
+    ///
+    /// - Parameters:
+    ///   - left: the left padding size
+    ///   - right: the right padding size
+    /// - Returns: itself, in order to continue configurating whatever is needed (suggar sintax)
     @discardableResult
     func addPadding(left: CGFloat = .zero, right: CGFloat = .zero) -> Self {
         

@@ -10,10 +10,14 @@ import Foundation
 
 extension String {
     
+    /// Capitalizes the first letter of itself
+    ///
+    /// - Returns: itself, in order to continue manupilating it (suggar sintax)
     func capitalizingFirstLetter() -> String {
         return prefix(1).capitalized + dropFirst()
     }
     
+    /// Capitalizes the first letter of itself
     mutating func capitalizeFirstLetter() {
         self = self.capitalizingFirstLetter()
     }

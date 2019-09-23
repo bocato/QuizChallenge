@@ -56,8 +56,7 @@ struct UseCaseEvent<Data, Error: Swift.Error> {
 }
 extension UseCaseEvent {
     
-    
-    /// Represents the differents status that can happen to any UseCase.
+    /// Represents the different statuses that can happen to any UseCase.
     ///
     /// - idle: Nothing happened yet.
     /// - loading: Some requests started to happen.

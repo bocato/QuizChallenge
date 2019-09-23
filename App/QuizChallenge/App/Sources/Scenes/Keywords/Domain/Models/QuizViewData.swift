@@ -8,6 +8,8 @@
 
 import Foundation
 
+/// Defines the data model that the views that
+/// need a quiz information will receive
 struct QuizViewData {
     let title: String
     let items: [Item]

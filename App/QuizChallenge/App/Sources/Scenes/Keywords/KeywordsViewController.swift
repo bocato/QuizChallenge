@@ -163,6 +163,10 @@ extension KeywordsViewController: KeywordsViewModelBinding {
         
     }
     
+    func textFieldShouldReset() {
+        customView.resetTextField()
+    }
+    
 }
 
 extension KeywordsViewController: UITableViewDataSource {

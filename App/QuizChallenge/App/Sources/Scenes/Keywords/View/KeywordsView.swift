@@ -73,6 +73,12 @@ final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
     
     // MARK: - Initialization
     
+    /// Initializes a KeywordsView
+    ///
+    /// - Parameters:
+    ///   - tableViewDataSource: the inner tableView dataSource
+    ///   - bottomViewButtonAction: a closure, to represent the action that needs to be done when the bottom buttom is touched
+    ///   - textDidReturnClosure: a closure, to be run when `textFieldShouldReturn` happens on the search textfield
     init(
         tableViewDataSource: UITableViewDataSource,
         bottomViewButtonAction: @escaping (() -> Void),
@@ -165,44 +171,52 @@ final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
     
     // MARK: Public Functions
     
+    /// Sets the `titleLabel` text
     func setTitle(_ text: String?) {
         ThreadUtils.runOnMainThread {
             self.titleLabel.text = text
         }
     }
     
+    /// Sets the textField `placeholder` text
     func setTextFieldPlaceHolder(_ text: String?) {
         ThreadUtils.runOnMainThread {
             self.textField.placeholder = text
         }
     }
     
+    /// Sets the leftTextfield's text of the `BottomView`
     func setBottomLeftText(_ text: String?) {
         ThreadUtils.runOnMainThread {
             self.bottomView.setLeftText(text)
         }
     }
     
+    // Sets the rightTextfield's text of the `BottomView`
     func setBottomRightText(_ text: String?) {
         ThreadUtils.runOnMainThread {
             self.bottomView.setRightText(text)
         }
     }
     
+    // Sets the button's title of the `BottomView`
     func setBottomButtonTitle(_ title: String?) {
         ThreadUtils.runOnMainThread {
             self.bottomView.setButtonTitle(title)
         }
     }
     
+    /// Resets the textField
     func resetTextField() {
         textField.text = nil
     }
     
+    /// Reloads the tableView
     func reloadTableView() {
         tableView.reloadData()
     }
     
+    /// Shows the tableView
     func showTableView(_ show: Bool = true) {
         tableView.isHidden = !show
     }
@@ -218,7 +232,6 @@ extension KeywordsView: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textDidReturnClosure(textField.text)
-        textField.text = ""
         return true
     }
     

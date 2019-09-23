@@ -35,6 +35,7 @@ final class QuizTableViewCell: UITableViewCell {
     
     // MARK: - Configuration
     
+    /// Configures the cell with a viewData object of type `QuizViewData.Item`
     func configure(with viewDataItem: QuizViewData.Item) {
         textLabel?.text = viewDataItem.text
     }

@@ -79,79 +79,325 @@ final class KeywordsViewModelTests: XCTestCase {
         // Then
         XCTAssertNotNil(item)
     }
+    
+    // MARK: - KeywordsViewModelBusinessLogic Tests
+    
+    func test_whenLoadingQuizDataSuccessfully_thenViewControlerShouldReceiveTheCorrectData() {
+        // Given
+        let viewModelBinderSpy = KeywordsViewModelBindingSpy()
+        let viewStateRendererSpy = ViewStateRenderingSpy()
+        let quizEntityToReturn = QuizEntity(
+            question: "Some question",
+            answer: ["a"]
+        )
+        let expectedViewData = QuizViewData(
+            title: "Some question",
+            items: [QuizViewData.Item(text: "A")]
+        )
+        let expectedBottomLeftText = "00/01"
+        let resultToReturn: Result<QuizEntity, QuizServiceError> = .success(quizEntityToReturn)
+        let quizService = QuizServiceStub(resultToReturn: resultToReturn)
+        let fetchQuizUseCase = FetchQuizUseCase(quizService: quizService)
+        let sut = KeywordsViewModel(fetchQuizUseCase: fetchQuizUseCase)
+        sut.viewModelBinder = viewModelBinderSpy
+        sut.viewStateRenderer = viewStateRendererSpy
+        
+        // When
+        sut.loadQuizData()
+        
+        // Then
+        
+        let viewStates = viewStateRendererSpy.allStatesPassed
+        XCTAssertTrue(viewStateRendererSpy.renderStateCalled)
+        guard case .loading = viewStates[0] else {
+            XCTFail("Expected .loading, but got \(viewStates[0])")
+            return
+        }
+        guard case .content = viewStates[1] else {
+            XCTFail("Expected .content, but got \(viewStates[0])")
+            return
+        }
+        
+        XCTAssertTrue(viewModelBinderSpy.viewTitleDidChangeCalled, "`viewTitleDidChange` should have been called.")
+        XCTAssertEqual(viewModelBinderSpy.titlePassedToViewTitleDidChange, expectedViewData.title, "Expected \(expectedViewData.title), but got \(viewModelBinderSpy.titlePassedToViewTitleDidChange ?? "")")
+        
+        XCTAssertTrue(viewModelBinderSpy.bottomLeftTextDidChangeCalled, "`bottomLeftTextDidChange` should have been called.")
+        XCTAssertEqual(viewModelBinderSpy.textPassedToBottomLeftTextDidChange, expectedBottomLeftText, "Expected \(expectedBottomLeftText), but got \(viewModelBinderSpy.titlePassedToViewTitleDidChange ?? "")")
+    }
+    
+    func test_whenLoadingQuizDataWithError_thenTheViewControllerShouldReceiveAnErrorFillerToHandle() {
+        // Given
+        let viewModelBinderSpy = KeywordsViewModelBindingSpy()
+        let viewStateRendererSpy = ViewStateRenderingSpy()
+        let expectedViewFiller = ViewFiller(title: "Ooops!", subtitle: "Something wrong has happened")
+        let errorToReturn: QuizServiceError = .networking(.unknown)
+        let resultToReturn: Result<QuizEntity, QuizServiceError> = .failure(errorToReturn)
+        let quizService = QuizServiceStub(resultToReturn: resultToReturn)
+        let fetchQuizUseCase = FetchQuizUseCase(quizService: quizService)
+        let sut = KeywordsViewModel(fetchQuizUseCase: fetchQuizUseCase)
+        sut.viewModelBinder = viewModelBinderSpy
+        sut.viewStateRenderer = viewStateRendererSpy
+        
+        // When
+        sut.loadQuizData()
+        
+        // Then
+        let viewStates = viewStateRendererSpy.allStatesPassed
+        XCTAssertTrue(viewStateRendererSpy.renderStateCalled)
+        guard case .loading = viewStates[0] else {
+            XCTFail("Expected .loading, but got \(viewStates[0])")
+            return
+        }
+        guard case let .error(viewFiller) = viewStates[1] else {
+            XCTFail("Expected .content, but got \(viewStates[0])")
+            return
+        }
+        XCTAssertNotNil(viewFiller, "Expected a viewFiller, but got nil.")
+        XCTAssertEqual(viewFiller?.title, expectedViewFiller.title, "Expected \(expectedViewFiller.title), but got \(viewFiller?.title ?? "").")
+        XCTAssertEqual(viewFiller?.subtitle, expectedViewFiller.subtitle, "Expected \(expectedViewFiller.subtitle ?? ""), but got \(viewFiller?.subtitle ?? "").")
+    }
+    
+    func test_whenToggleTimerIsCalledAndTimerIsNotRunning_timerShouldStartAndReflectOnView() {
+        // Given
+        let viewModelBinderSpy = KeywordsViewModelBindingSpy()
+        let countDownTimerProviderStubSpy = CountDownTimerProviderStubSpy()
+        countDownTimerProviderStubSpy.isRunningToReturn = false
+        countDownTimerProviderStubSpy.runOnFinish = false
+        let sut = KeywordsViewModel(
+            timerPeriod: 1,
+            countDownTimer: countDownTimerProviderStubSpy,
+            fetchQuizUseCase: FetchQuizUseCaseProviderDummy()
+        )
+        sut.viewModelBinder = viewModelBinderSpy
+        
+        // Then
+        sut.toggleTimer()
+        
+        // When
+        XCTAssertTrue(viewModelBinderSpy.bottomButtonTitleDidChangeCalled, "Expected `bottomButtonTitleDidChange` to be called.")
+        XCTAssertEqual(viewModelBinderSpy.titlePassedToBottomButtonTitleDidChange, "Reset", "Expected `Reset`, but got \(viewModelBinderSpy.titlePassedToBottomButtonTitleDidChange.debugDescription)")
+        
+        XCTAssertTrue(viewModelBinderSpy.bottomRightTextDidChangeCalled, "Expected `bottomRightTextDidChange` to be called.")
+        XCTAssertEqual(viewModelBinderSpy.bottomRightTextDidChangeValuesAcumulated.count, 3, "Expected to receive 3 values.")
+        XCTAssertEqual(viewModelBinderSpy.bottomRightTextDidChangeValuesAcumulated[1], "Reset", "Expected `Reset`, but found \(viewModelBinderSpy.bottomRightTextDidChangeValuesAcumulated[1] ?? "").")
+        
+    }
 
 }
 
 // MARK: - Testing Helpers
 
-private class FetchQuizUseCaseProviderDummy: FetchQuizUseCaseProvider {
+private final class FetchQuizUseCaseProviderDummy: FetchQuizUseCaseProvider {
     func execute(completion: @escaping (UseCaseEvent<QuizViewData, FetchQuizUseCaseError>) -> Void) {}
 }
 
-private class FetchQuizUseCaseProviderSpy: FetchQuizUseCaseProvider {
+private final class FetchQuizUseCaseProviderSpy: FetchQuizUseCaseProvider {
     private(set) var executeCalled = false
     func execute(completion: @escaping (UseCaseEvent<QuizViewData, FetchQuizUseCaseError>) -> Void) {
         executeCalled = true
     }
 }
 
-private class KeywordsViewModelBindingSpy: KeywordsViewModelBinding {
+private final class KeywordsViewModelBindingSpy: KeywordsViewModelBinding {
     
     private(set) var viewTitleDidChangeCalled = false
     private(set) var titlePassedToViewTitleDidChange: String?
+    private(set) var viewTitleDidChangeValuesAcumulated = [String?]()
     func viewTitleDidChange(_ title: String?) {
         viewTitleDidChangeCalled = true
         titlePassedToViewTitleDidChange = title
+        viewTitleDidChangeValuesAcumulated.append(title)
     }
     
     private(set) var textFieldPlaceholderDidChangeCalled = false
     private(set) var textPassedToTextFieldPlaceholderDidChange: String?
+    private(set) var textFieldPlaceholderDidChangeValuesAcumulated = [String?]()
     func textFieldPlaceholderDidChange(_ text: String?) {
         textFieldPlaceholderDidChangeCalled = true
         textPassedToTextFieldPlaceholderDidChange = text
+        textFieldPlaceholderDidChangeValuesAcumulated.append(text)
     }
     
     private(set) var bottomRightTextDidChangeCalled = false
     private(set) var textPassedToBottomRightTextDidChange: String?
+    private(set) var bottomRightTextDidChangeValuesAcumulated = [String?]()
     func bottomRightTextDidChange(_ text: String?) {
         bottomRightTextDidChangeCalled = true
         textPassedToBottomRightTextDidChange = text
+        bottomRightTextDidChangeValuesAcumulated.append(text)
     }
     
     private(set) var bottomLeftTextDidChangeCalled = false
     private(set) var textPassedToBottomLeftTextDidChange: String?
+    private(set) var bottomLeftTextDidChangeValuesAcumulated = [String?]()
     func bottomLeftTextDidChange(_ text: String?) {
         bottomLeftTextDidChangeCalled = true
         textPassedToBottomLeftTextDidChange = text
+        bottomLeftTextDidChangeValuesAcumulated.append(text)
     }
     
     private(set) var bottomButtonTitleDidChangeCalled = false
     private(set) var titlePassedToBottomButtonTitleDidChange: String?
+    private(set) var bottomButtonTitleDidChangeValuesAcumulated = [String?]()
     func bottomButtonTitleDidChange(_ title: String?) {
         bottomButtonTitleDidChangeCalled = true
         titlePassedToBottomButtonTitleDidChange = title
+        bottomButtonTitleDidChangeValuesAcumulated.append(title)
+    }
+    
+    private(set) var textFieldShouldResetCalled = false
+    func textFieldShouldReset() {
+        textFieldShouldResetCalled = true
     }
     
     private(set) var showTimerFinishedModalWithDataCalled = false
     private(set) var modalDataPassedToShowTimerFinishedModalWithData: SimpleModalViewData?
+    private(set) var showTimerFinishedModalWithDataValuesAcumulated = [SimpleModalViewData]()
     func showTimerFinishedModalWithData(_ modalData: SimpleModalViewData) {
         showTimerFinishedModalWithDataCalled = true
         modalDataPassedToShowTimerFinishedModalWithData = modalData
+        showTimerFinishedModalWithDataValuesAcumulated.append(modalData)
     }
     
     private(set) var showWinnerModalWithDataCalled = false
     private(set) var modalDataPassedToShowWinnerModalWithData: SimpleModalViewData?
+    private(set) var showWinnerModalWithDataValuesAcumulated = [SimpleModalViewData]()
     func showWinnerModalWithData(_ modalData: SimpleModalViewData) {
         showWinnerModalWithDataCalled = true
         modalDataPassedToShowWinnerModalWithData = modalData
+        showWinnerModalWithDataValuesAcumulated.append(modalData)
     }
     
     private(set) var showErrorModalWithDataCalled = false
     private(set) var modalDataPassedToShowErrorModalWithData: SimpleModalViewData?
+    private(set) var showErrorModalWithDataValuesAcumulated = [SimpleModalViewData]()
     func showErrorModalWithData(_ modalData: SimpleModalViewData) {
         showErrorModalWithDataCalled = true
         modalDataPassedToShowErrorModalWithData = modalData
+        showErrorModalWithDataValuesAcumulated.append(modalData)
     }
     
+}
+
+private final class ViewStateRenderingSpy: ViewStateRendering {
+    
+    private(set) var renderStateCalled = false
+    private(set) var lastStatePassed: ViewState?
+    private(set) var allStatesPassed = [ViewState]()
+    func render(_ state: ViewState) {
+        renderStateCalled = true
+        lastStatePassed = state
+        allStatesPassed.append(state)
+    }
     
 }
+
+private final class CountDownTimerProviderStubSpy: CountDownTimerProvider {
+    
+    private var lastTimerPeriod: Int = 0
+    private var lastTimeInterval: TimeInterval = 1.0
+    private var lastOnTickClosure: ((_ remainingSeconds: Int) -> Void)?
+    private var lastOnFinishClosure: (() -> Void)?
+    private var timerWasStopped: Bool = false
+    private var timeLeft: Int = 0
+    
+    var runOnFinish = true
+    var runOnTick = true
+    private(set) var dispatchCalled = false
+    private(set) var periodPassedToDispatch: Int?
+    private(set) var timeIntervalPassedToDispatch: TimeInterval?
+    private(set) var onTickPassedToDispatch: ((Int) -> Void)?
+    private(set) var onFinishPassedToDispatch: (() -> Void)?
+    func dispatch(
+        forTimePeriodInSeconds period: Int,
+        timeInterval: TimeInterval = 1.0,
+        onTick: ((Int) -> Void)?,
+        onFinish: (() -> Void)?
+    ) {
+        
+        // Spy Logic
+        dispatchCalled = true
+        periodPassedToDispatch = period
+        timeIntervalPassedToDispatch = timeInterval
+        onTickPassedToDispatch = onTick
+        onFinishPassedToDispatch = onFinish
+        
+        // Stub Logic
+        timeLeft = period
+        lastTimerPeriod = period
+        lastTimeInterval = timeInterval
+        lastOnTickClosure = onTick
+        lastOnFinishClosure = onFinish
+        isRunningToReturn = true
+        
+        if runOnFinish {
+            let step = Int(timeInterval)
+            for x in stride(from: period, to: 0, by: -step) {
+                if stopWasCalled {
+                    return
+                }
+                timeLeft = x
+                onTick?(x)
+            }
+        }
+       
+        if runOnFinish {
+            onFinish?()
+        }
+        
+    }
+    
+    private(set) var restartCalled = false
+    func restart() {
+        
+        // Spy Logic
+        restartCalled = true
+        
+        // Stub Logic
+        isRunningToReturn = false
+        timeLeft = lastTimerPeriod
+        
+        dispatch(
+            forTimePeriodInSeconds: lastTimerPeriod,
+            timeInterval: lastTimeInterval,
+            onTick: lastOnTickClosure,
+            onFinish: lastOnFinishClosure
+        )
+        
+    }
+    
+    private var stopWasCalled = false
+    func stop() {
+        // Spy Logic
+        stopWasCalled = true
+        isRunningToReturn = false
+    }
+    
+    var isRunningToReturn: Bool?
+    var isRunning: Bool {
+        if stopWasCalled { return stopWasCalled }
+        return isRunningToReturn ?? false
+    }
+    
+}
+
+
+//private final class CountDownTimerProviderStub: CountDownTimerProvider {
+//
+//    func dispatch(
+//        forTimePeriodInSeconds period: Int,
+//        timeInterval: TimeInterval,
+//        onTick: CountDownTimerProvider.OnTickClosure?,
+//        onFinish: CountDownTimerProvider.OnFinishClosure?) {
+//        <#code#>
+//    }
+//
+//    func restart() {}
+//    func stop() {}
+//
+//    var isRunningToReturn = false
+//    var isRunning: Bool {
+//        return isRunningToReturn
+//    }
+//
+//}

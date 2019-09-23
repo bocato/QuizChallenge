@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Define a Quiz entity
 struct QuizEntity: Codable {
     let question: String
     let answer: [String]

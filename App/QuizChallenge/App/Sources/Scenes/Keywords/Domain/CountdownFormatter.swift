@@ -8,7 +8,14 @@
 
 import Foundation
 
+/// Defines an abstraction for the formatting process of a countdown
 protocol CountDownFormatting {
+    
+    /// Returns a String value, in the format mm:ss,
+    /// representing the seconds that were passed as a parameter
+    ///
+    /// - Parameter seconds: time in seconds
+    /// - Returns: a String value, in the format mm:ss
     func formatToMinutes(from seconds: Int) -> String
 }
 

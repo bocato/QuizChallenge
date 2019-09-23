@@ -8,27 +8,50 @@
 
 import Foundation
 
+/// Defines a binding protocol between the viewModel and the ViewController
 protocol KeywordsViewModelBinding: AnyObject {
     func viewTitleDidChange(_ title: String?)
     func textFieldPlaceholderDidChange(_ text: String?)
     func bottomRightTextDidChange(_ text: String?)
     func bottomLeftTextDidChange(_ text: String?)
     func bottomButtonTitleDidChange(_ title: String?)
+    func textFieldShouldReset()
     func showTimerFinishedModalWithData(_ modalData: SimpleModalViewData)
     func showWinnerModalWithData(_ modalData: SimpleModalViewData)
     func showErrorModalWithData(_ modalData: SimpleModalViewData)
 }
 
+/// Defines the display logic for KeywordsViewController
 protocol KeywordsViewModelDisplayLogic {
+    
+    /// Returns the number of answers to be shown on the screen
     var numberOfAnswers: Int { get }
+    
+    /// Get's the answer item for some index
+    ///
+    /// - Parameter index: some index
+    /// - Returns: nil, if the index does not exist, `QuizViewData.Item` otherwise
     func answerItem(at index: Int) -> QuizViewData.Item?
+    
+    /// Defines operations to be done on viewDidLoad, normally initializations and setups
     func onViewDidLoad()
 }
 
+/// Defines the business logic for KeywordsViewController
 protocol KeywordsViewModelBusinessLogic {
+    
+    /// Loads the quiz data from the necessary dataSources
     func loadQuizData()
+    
+    /// Toggles the timer on and off
     func toggleTimer()
+    
+    /// Resets the quiz and viewData related to it
     func resetQuiz()
+    
+    /// Verifies if the user has inputed a valid answer
+    ///
+    /// - Parameter input: the user input, from a textField
     func verifyTextFieldInput(_ input: String?)
 }
 
@@ -37,7 +60,7 @@ final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
     // MARK: - Dependencies
     
     private let timerPeriod: Int
-    private let countDownTimer: CountDownTimerProtocol
+    private let countDownTimer: CountDownTimerProvider
     private let fetchQuizUseCase: FetchQuizUseCaseProvider
     private let countDownFormatter: CountDownFormatting
     private var countRightAnswersUseCase: CountRightAnswersUseCaseProvider
@@ -95,6 +118,9 @@ final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
         }
     }
     private var numberOfRightAnswers: Int? {
+        willSet {
+            cleanTextFieldIfNeeededWhenNumberOfRightAnswersWillSet(newValue: newValue)
+        }
         didSet {
             viewModelBinder?.bottomLeftTextDidChange(bottomLeftTextString)
             showWinnerModalIfNeeded()
@@ -105,7 +131,7 @@ final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
     
     init(
         timerPeriod: Int = 300,
-        countDownTimer: CountDownTimerProtocol = CountDownTimer(),
+        countDownTimer: CountDownTimerProvider = CountDownTimer(),
         fetchQuizUseCase: FetchQuizUseCaseProvider,
         countDownFormatter: CountDownFormatting = CountDownFormatter(),
         countRightAnswersUseCase: CountRightAnswersUseCaseProvider = CountRightAnswersUseCase()
@@ -198,16 +224,16 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
         
         bottomButtonTitle = "Reset"
         
-        let onTick: CountDownTimerProtocol.OnTickClosure = { [weak self] timeLeft in
+        let onTick: ((Int) -> Void) = { [weak self] timeLeft in
             self?.bottomRightText = self?.countDownFormatter.formatToMinutes(from: timeLeft)
         }
         
-        let onFinish: CountDownTimerProtocol.OnFinishClosure = { [weak self] in
+        let onFinish: (() -> Void) = { [weak self] in
             self?.handleTimerFinish()
         }
         
         countDownTimer.dispatch(
-            forTimePeriod: timerPeriod,
+            forTimePeriodInSeconds: timerPeriod,
             timeInterval: 1.0,
             onTick: onTick,
             onFinish: onFinish
@@ -227,6 +253,15 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
     private func resetTimerInfo() {
         bottomButtonTitle = "Start"
         bottomRightText = countDownFormatter.formatToMinutes(from: self.timerPeriod)
+    }
+    
+    // MARK: - verifyTextFieldInput Logic
+    
+    private func cleanTextFieldIfNeeededWhenNumberOfRightAnswersWillSet(newValue: Int?) {
+        guard let newValue = newValue, let currentValue = numberOfRightAnswers else { return }
+        if newValue > currentValue {
+            viewModelBinder?.textFieldShouldReset()
+        }
     }
     
     // MARK: - Modals

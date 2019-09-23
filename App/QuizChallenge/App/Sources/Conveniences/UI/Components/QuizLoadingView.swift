@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Defines a loadingView for the quiz
 final class QuizLoadingView: UIView {
     
     // MARK: - Constants

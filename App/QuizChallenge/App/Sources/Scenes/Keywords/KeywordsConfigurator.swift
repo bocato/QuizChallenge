@@ -9,5 +9,7 @@
 import UIKit
 
 protocol KeywordsFactoryProtocol {
+    
+    /// Creates a new instance of KeywordsViewController with all it's dependecies
     func makeKeywordsViewController() -> KeywordsViewController
 }

@@ -8,6 +8,10 @@
 
 import UIKit
 
+/// Defines an abstraction to take care of the metrics used in the project
+/// The main idea here is to have descritive names and standardization of the
+/// values used through the project, and make it simple/centralized updates
+/// when changes to the DesignSystem occours
 struct Metrics {
     
     private init() {}
