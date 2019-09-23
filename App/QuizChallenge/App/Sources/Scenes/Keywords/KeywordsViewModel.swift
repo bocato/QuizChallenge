@@ -41,7 +41,7 @@ protocol KeywordsViewModelDisplayLogic {
 protocol KeywordsViewModelBusinessLogic {
     
     /// Loads the quiz data from the necessary dataSources
-    func loadQuizData(_ onSuccess: (() -> Void)?)
+    func loadQuizData()
     
     /// Toggles the timer on and off
     func toggleTimer()
@@ -168,7 +168,7 @@ final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
 // MARK: - KeywordsViewModelBusinessLogic
 extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
     
-    func loadQuizData(_ onSuccess: (() -> Void)? = nil) {
+    func loadQuizData() {
         fetchQuizUseCase.execute { [weak self] event in
             switch event.status {
             case let .data(viewData):
@@ -185,17 +185,17 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
     
     func toggleTimer() {
         if countDownTimer.isRunning {
-            countDownTimer.restart()
+            resetQuiz()
         } else {
             startTimer()
         }
     }
     
     func resetQuiz() {
+        countDownTimer.stop()
+        numberOfRightAnswers = 0
         resetTimerInfo()
-        loadQuizData { [countDownTimer] in
-            countDownTimer.stop()
-        }
+        loadQuizData()
     }
     
     func verifyTextFieldInput(_ input: String?) {
@@ -261,7 +261,7 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
     
     private func cleanTextFieldIfNeeededWhenNumberOfRightAnswersWillSet(newValue: Int?) {
         guard let newValue = newValue, let currentValue = numberOfRightAnswers else { return }
-        if newValue > currentValue {
+        if newValue >= currentValue {
             viewModelBinder?.textFieldShouldReset()
         }
     }
@@ -284,8 +284,8 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
     
         countDownTimer.stop()
         
-        let title = "Contgratulations"
-        let subtitle = "Good job"
+        let title = "Congratulations"
+        let subtitle = "Good job! You found all the answers on time. Keep up with the great work."
         let buttonText = "Play Again"
         let modalData =  SimpleModalViewData(
             title: title,

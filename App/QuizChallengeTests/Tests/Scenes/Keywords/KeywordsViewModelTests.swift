@@ -157,22 +157,6 @@ final class KeywordsViewModelTests: XCTestCase {
         XCTAssertEqual(viewFiller?.subtitle, expectedViewFiller.subtitle, "Expected \(expectedViewFiller.subtitle ?? ""), but got \(viewFiller?.subtitle ?? "").")
     }
     
-    func test_whenToggleTimerIsCalledAndTimerIsNotRunning_timerShouldBeRestarted() {
-        // Given
-        let countDownTimerProviderStubSpy = CountDownTimerProviderStubSpy()
-        countDownTimerProviderStubSpy.isRunningToReturn = true
-        let sut = KeywordsViewModel(
-            countDownTimer: countDownTimerProviderStubSpy,
-            fetchQuizUseCase: FetchQuizUseCaseProviderDummy()
-        )
-        
-        // Then
-        sut.toggleTimer()
-        
-        // When
-        XCTAssertTrue(countDownTimerProviderStubSpy.restartCalled)
-    }
-    
     func test_whenToggleTimerIsCalledAndTimerIsRunning_timerShouldStartAndReflectOnView() {
         // Given
         let viewModelBinderSpy = KeywordsViewModelBindingSpy()
@@ -433,7 +417,7 @@ private final class CountDownTimerProviderStubSpy: CountDownTimerProvider {
         if runOnTick {
             let step = Int(timeInterval)
             for x in stride(from: period, to: 0, by: -step) {
-                if stopWasCalled {
+                if stopCalled {
                     return
                 }
                 timeLeft = x
@@ -471,16 +455,16 @@ private final class CountDownTimerProviderStubSpy: CountDownTimerProvider {
         
     }
     
-    private var stopWasCalled = false
+    private(set) var stopCalled = false
     func stop() {
         // Spy Logic
-        stopWasCalled = true
+        stopCalled = true
         isRunningToReturn = false
     }
     
     var isRunningToReturn: Bool?
     var isRunning: Bool {
-        if stopWasCalled { return stopWasCalled }
+        if stopCalled { return false }
         return isRunningToReturn ?? false
     }
     
