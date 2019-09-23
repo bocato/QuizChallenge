@@ -133,7 +133,7 @@ extension KeywordsViewController: KeywordsViewModelBinding {
         customView.setBottomLeftText(text)
     }
     
-    func shouldShowTimerFinishedModalWithData(_ modalData: SimpleModalViewData) {
+    func showTimerFinishedModalWithData(_ modalData: SimpleModalViewData) {
         
         let buttonActionHandler: (() -> Void) = { [viewModel] in
             viewModel.resetQuiz()
@@ -148,7 +148,7 @@ extension KeywordsViewController: KeywordsViewModelBinding {
         
     }
     
-    func shouldShowWinnerModalWithData(_ modalData: SimpleModalViewData) {
+    func showWinnerModalWithData(_ modalData: SimpleModalViewData) {
         
         let buttonActionHandler: (() -> Void) = { [viewModel] in
             viewModel.resetQuiz()
@@ -173,10 +173,14 @@ extension KeywordsViewController: UITableViewDataSource {
     
     // TODO: Refactor
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: QuizTableViewCell.className, for: indexPath) as? QuizTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: QuizTableViewCell.className,
+            for: indexPath
+        ) as? QuizTableViewCell,
+        let answer = viewModel.answerItem(at: indexPath.row) else {
             return UITableViewCell()
         }
-        let answer = viewModel.answerItem(at: indexPath.row)
+        
         cell.configure(with: answer)
         return cell
     }

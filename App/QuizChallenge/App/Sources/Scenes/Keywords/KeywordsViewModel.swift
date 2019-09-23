@@ -14,14 +14,14 @@ protocol KeywordsViewModelBinding: AnyObject {
     func bottomRightTextDidChange(_ text: String?)
     func bottomLeftTextDidChange(_ text: String?)
     func bottomButtonTitleDidChange(_ title: String?)
-    func shouldShowTimerFinishedModalWithData(_ modalData: SimpleModalViewData)
-    func shouldShowWinnerModalWithData(_ modalData: SimpleModalViewData)
+    func showTimerFinishedModalWithData(_ modalData: SimpleModalViewData)
+    func showWinnerModalWithData(_ modalData: SimpleModalViewData)
     func showErrorModalWithData(_ modalData: SimpleModalViewData)
 }
 
 protocol KeywordsViewModelDisplayLogic {
     var numberOfAnswers: Int { get }
-    func answerItem(at index: Int) -> QuizViewData.Item
+    func answerItem(at index: Int) -> QuizViewData.Item?
     func onViewDidLoad()
 }
 
@@ -132,7 +132,8 @@ final class KeywordsViewModel: KeywordsViewModelDisplayLogic {
         return possibleAnswers.count
     }
     
-    func answerItem(at index: Int) -> QuizViewData.Item {
+    func answerItem(at index: Int) -> QuizViewData.Item? {
+        guard index < possibleAnswers.count else { return nil }
         return possibleAnswers[index]
     }
     
@@ -239,7 +240,7 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
             subtitle: subtitle,
             buttonText: buttonText
         )
-        viewModelBinder?.shouldShowTimerFinishedModalWithData(modalData)
+        viewModelBinder?.showTimerFinishedModalWithData(modalData)
     }
     
     private func showWinnerModal() {
@@ -255,7 +256,7 @@ extension KeywordsViewModel: KeywordsViewModelBusinessLogic {
             buttonText: buttonText
         )
         
-        viewModelBinder?.shouldShowWinnerModalWithData(modalData)
+        viewModelBinder?.showWinnerModalWithData(modalData)
     }
     
     private func showWinnerModalIfNeeded() {

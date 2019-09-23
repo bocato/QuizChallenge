@@ -55,8 +55,6 @@
 		E57892442337E95500CB5849 /* KeywordsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57892432337E95500CB5849 /* KeywordsViewModelTests.swift */; };
 		E578924623385FE200CB5849 /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578924523385FE200CB5849 /* AppDelegateTests.swift */; };
 		E578924D2338612C00CB5849 /* MirrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578924C2338612C00CB5849 /* MirrorExtension.swift */; };
-		E5789250233866BD00CB5849 /* UseCaseEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578924F233866BD00CB5849 /* UseCaseEventTests.swift */; };
-		E57892532338671000CB5849 /* CountDownTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57892522338671000CB5849 /* CountDownTimerTests.swift */; };
 		E5CE4246233446D800295277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE4245233446D800295277 /* AppDelegate.swift */; };
 		E5CE424D233446D900295277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5CE424C233446D900295277 /* Assets.xcassets */; };
 		E5CE4250233446D900295277 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5CE424E233446D900295277 /* LaunchScreen.storyboard */; };
@@ -121,8 +119,6 @@
 		E57892432337E95500CB5849 /* KeywordsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordsViewModelTests.swift; sourceTree = "<group>"; };
 		E578924523385FE200CB5849 /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
 		E578924C2338612C00CB5849 /* MirrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorExtension.swift; sourceTree = "<group>"; };
-		E578924F233866BD00CB5849 /* UseCaseEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseEventTests.swift; sourceTree = "<group>"; };
-		E57892522338671000CB5849 /* CountDownTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownTimerTests.swift; sourceTree = "<group>"; };
 		E5CE4242233446D800295277 /* QuizChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5CE4245233446D800295277 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5CE424C233446D900295277 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -195,8 +191,6 @@
 		E578916B233641A400CB5849 /* Conveniences */ = {
 			isa = PBXGroup;
 			children = (
-				E578924E233866AD00CB5849 /* Models */,
-				E5789251233866EF00CB5849 /* Utils */,
 				E578916123363B4C00CB5849 /* Extensions */,
 			);
 			path = Conveniences;
@@ -405,22 +399,6 @@
 				E578924C2338612C00CB5849 /* MirrorExtension.swift */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		E578924E233866AD00CB5849 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				E578924F233866BD00CB5849 /* UseCaseEventTests.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		E5789251233866EF00CB5849 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				E57892522338671000CB5849 /* CountDownTimerTests.swift */,
-			);
-			path = Utils;
 			sourceTree = "<group>";
 		};
 		E5CE4239233446D800295277 = {
@@ -663,9 +641,7 @@
 				E578924623385FE200CB5849 /* AppDelegateTests.swift in Sources */,
 				E578916323363B6400CB5849 /* NSObjectExtensionTests.swift in Sources */,
 				E578916823363DF400CB5849 /* EnvironmentTests.swift in Sources */,
-				E5789250233866BD00CB5849 /* UseCaseEventTests.swift in Sources */,
 				E57892442337E95500CB5849 /* KeywordsViewModelTests.swift in Sources */,
-				E57892532338671000CB5849 /* CountDownTimerTests.swift in Sources */,
 				E578922223371A7E00CB5849 /* StringExtensionTests.swift in Sources */,
 				E578923F2337DC7E00CB5849 /* CountRightAnswersUseCaseTests.swift in Sources */,
 			);

@@ -84,7 +84,8 @@ final class FetchQuizUseCaseTests: XCTestCase {
 
 }
 
-private final class QuizServiceStub: QuizServiceProvider {
+// MARK: - Testing Helpers
+final class QuizServiceStub: QuizServiceProvider {
     
     private let resultToReturn: Result<QuizEntity, QuizServiceError>
     init(resultToReturn: Result<QuizEntity, QuizServiceError>) {
