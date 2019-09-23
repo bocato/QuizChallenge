@@ -15,13 +15,11 @@ extension AppDelegate: KeywordsFactoryProtocol {
     
     func makeKeywordsViewController() -> KeywordsViewController {
         
-        let countDownTimer = CountDownTimer()
-        
         let dispatcher = URLSessionDispatcher()
         let quizService = QuizService(dispatcher: dispatcher)
         let fetchQuizUseCase = FetchQuizUseCase(quizService: quizService)
         
-        let viewModel = KeywordsViewModel(countDownTimer: countDownTimer, fetchQuizUseCase: fetchQuizUseCase)
+        let viewModel = KeywordsViewModel(fetchQuizUseCase: fetchQuizUseCase)
         
         let viewController = KeywordsViewController(viewModel: viewModel)
         viewModel.viewStateRenderer = viewController
