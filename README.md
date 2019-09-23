@@ -2,9 +2,8 @@
 # QuizChallenge
 
 ---
-Implemented using:
-- MVVM architecture, with , in 
+Concepts applied:
+- MVVM architecture
 - POP
-- CleanArchitecture concepts
-- Swift 5
+- CleanArchitecture concepts  
 - MultiProject setup concept
