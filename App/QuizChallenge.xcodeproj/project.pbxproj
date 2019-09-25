@@ -28,7 +28,6 @@
 		E578919623365AFF00CB5849 /* ProjectColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578919523365AFF00CB5849 /* ProjectColors.swift */; };
 		E57891982336639400CB5849 /* StackViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891972336639400CB5849 /* StackViewBuilder.swift */; };
 		E578919A2336665200CB5849 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891992336665200CB5849 /* Metrics.swift */; };
-		E57891B32336915000CB5849 /* CountDownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891B22336915000CB5849 /* CountDownTimer.swift */; };
 		E57891C623369C5400CB5849 /* UseCaseEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891C523369C5300CB5849 /* UseCaseEvent.swift */; };
 		E57891E32336AB7400CB5849 /* QuizTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57891E22336AB7400CB5849 /* QuizTableViewCell.swift */; };
 		E57891E72336AD3300CB5849 /* SF-Pro-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E57891E42336AD3300CB5849 /* SF-Pro-Display-Semibold.otf */; };
@@ -55,6 +54,7 @@
 		E57892442337E95500CB5849 /* KeywordsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57892432337E95500CB5849 /* KeywordsViewModelTests.swift */; };
 		E578924623385FE200CB5849 /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578924523385FE200CB5849 /* AppDelegateTests.swift */; };
 		E578924D2338612C00CB5849 /* MirrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E578924C2338612C00CB5849 /* MirrorExtension.swift */; };
+		E57FBB88233B030A00165D8D /* CountDownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57FBB87233B030A00165D8D /* CountDownTimer.swift */; };
 		E5CE4246233446D800295277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE4245233446D800295277 /* AppDelegate.swift */; };
 		E5CE424D233446D900295277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5CE424C233446D900295277 /* Assets.xcassets */; };
 		E5CE4250233446D900295277 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5CE424E233446D900295277 /* LaunchScreen.storyboard */; };
@@ -92,7 +92,6 @@
 		E578919523365AFF00CB5849 /* ProjectColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectColors.swift; sourceTree = "<group>"; };
 		E57891972336639400CB5849 /* StackViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewBuilder.swift; sourceTree = "<group>"; };
 		E57891992336665200CB5849 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
-		E57891B22336915000CB5849 /* CountDownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CountDownTimer.swift; path = ../../../../../../../../../Documents/CountDownTimer.swift; sourceTree = "<group>"; };
 		E57891C523369C5300CB5849 /* UseCaseEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseCaseEvent.swift; sourceTree = "<group>"; };
 		E57891E22336AB7400CB5849 /* QuizTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTableViewCell.swift; sourceTree = "<group>"; };
 		E57891E42336AD3300CB5849 /* SF-Pro-Display-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Semibold.otf"; sourceTree = "<group>"; };
@@ -119,6 +118,7 @@
 		E57892432337E95500CB5849 /* KeywordsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordsViewModelTests.swift; sourceTree = "<group>"; };
 		E578924523385FE200CB5849 /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
 		E578924C2338612C00CB5849 /* MirrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorExtension.swift; sourceTree = "<group>"; };
+		E57FBB87233B030A00165D8D /* CountDownTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountDownTimer.swift; sourceTree = "<group>"; };
 		E5CE4242233446D800295277 /* QuizChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5CE4245233446D800295277 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5CE424C233446D900295277 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -264,8 +264,8 @@
 		E5789188233653C200CB5849 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				E57FBB87233B030A00165D8D /* CountDownTimer.swift */,
 				E5789189233653D300CB5849 /* ThreadUtils.swift */,
-				E57891B22336915000CB5849 /* CountDownTimer.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -597,6 +597,7 @@
 				E578916523363C9000CB5849 /* UIView+AutoLayout.swift in Sources */,
 				E578918E233656AA00CB5849 /* AppDelegate+Factories.swift in Sources */,
 				E57891FC2336C12A00CB5849 /* FetchQuizUseCase.swift in Sources */,
+				E57FBB88233B030A00165D8D /* CountDownTimer.swift in Sources */,
 				E578919623365AFF00CB5849 /* ProjectColors.swift in Sources */,
 				E57891752336427600CB5849 /* QuizService.swift in Sources */,
 				E578919223365AB900CB5849 /* UIColor+Hex.swift in Sources */,
@@ -605,7 +606,6 @@
 				E57892052336C96900CB5849 /* ModalHelper.swift in Sources */,
 				E57891C623369C5400CB5849 /* UseCaseEvent.swift in Sources */,
 				E578915C233639A900CB5849 /* Environment.swift in Sources */,
-				E57891B32336915000CB5849 /* CountDownTimer.swift in Sources */,
 				E57891982336639400CB5849 /* StackViewBuilder.swift in Sources */,
 				E57892372337B33800CB5849 /* QuizLoadingView.swift in Sources */,
 				E57891E32336AB7400CB5849 /* QuizTableViewCell.swift in Sources */,
