@@ -24,7 +24,7 @@ extension LoadingPresentable where Self: UIViewController {
 
     /// Tries to hide the loadingView that is visible
     func hideLoading() {
-        ThreadUtils.runOnMainThread {
+        DispatchQueue.main.async {
             let loadingView = self.view.viewWithTag(QuizLoadingView.tag)
             UIView.animate(withDuration: 0.25, animations: {
                 loadingView?.alpha = 0

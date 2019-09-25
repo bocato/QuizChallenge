@@ -1,8 +1,6 @@
 
 # QuizChallenge
 
-Tested on iOS 12
-
 ---
 Concepts applied:
 - MVVM architecture

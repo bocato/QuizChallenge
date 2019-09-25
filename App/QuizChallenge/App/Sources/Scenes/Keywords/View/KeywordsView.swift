@@ -173,37 +173,27 @@ final class KeywordsView: UIView, ScrollableContentKeyboardObserving {
     
     /// Sets the `titleLabel` text
     func setTitle(_ text: String?) {
-        ThreadUtils.runOnMainThread {
-            self.titleLabel.text = text
-        }
+        titleLabel.text = text
     }
     
     /// Sets the textField `placeholder` text
     func setTextFieldPlaceHolder(_ text: String?) {
-        ThreadUtils.runOnMainThread {
-            self.textField.placeholder = text
-        }
+        textField.placeholder = text
     }
     
     /// Sets the leftTextfield's text of the `BottomView`
     func setBottomLeftText(_ text: String?) {
-        ThreadUtils.runOnMainThread {
-            self.bottomView.setLeftText(text)
-        }
+        bottomView.setLeftText(text)
     }
     
     // Sets the rightTextfield's text of the `BottomView`
     func setBottomRightText(_ text: String?) {
-        ThreadUtils.runOnMainThread {
-            self.bottomView.setRightText(text)
-        }
+        bottomView.setRightText(text)
     }
     
     // Sets the button's title of the `BottomView`
     func setBottomButtonTitle(_ title: String?) {
-        ThreadUtils.runOnMainThread {
-            self.bottomView.setButtonTitle(title)
-        }
+        bottomView.setButtonTitle(title)
     }
     
     /// Resets the textField

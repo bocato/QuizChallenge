@@ -87,8 +87,10 @@ extension KeywordsViewController: ViewStateRendering {
             showLoading()
         case .content:
             hideLoading()
-            customView.reloadTableView()
-            customView.showTableView()
+            DispatchQueue.main.async { [weak self] in
+                self?.customView.reloadTableView()
+                self?.customView.showTableView()
+            }
         case let .error(filler):
             hideLoading()
             renderError(filler)
@@ -114,23 +116,33 @@ extension KeywordsViewController: KeywordsViewModelBinding {
     }
     
     func viewTitleDidChange(_ title: String?) {
-        customView.setTitle(title)
+        DispatchQueue.main.async { [weak self] in
+            self?.customView.setTitle(title)
+        }
     }
     
     func textFieldPlaceholderDidChange(_ text: String?) {
-        customView.setTextFieldPlaceHolder(text)
+        DispatchQueue.main.async { [weak self] in
+            self?.customView.setTextFieldPlaceHolder(text)
+        }
     }
     
     func bottomButtonTitleDidChange(_ title: String?) {
-        customView.setBottomButtonTitle(title)
+        DispatchQueue.main.async { [weak self] in
+            self?.customView.setBottomButtonTitle(title)
+        }
     }
     
     func bottomRightTextDidChange(_ text: String?) {
-        customView.setBottomRightText(text)
+        DispatchQueue.main.async { [weak self] in
+            self?.customView.setBottomRightText(text)
+        }
     }
     
     func bottomLeftTextDidChange(_ text: String?) {
-        customView.setBottomLeftText(text)
+        DispatchQueue.main.async { [weak self] in
+            self?.customView.setBottomLeftText(text)
+        }
     }
     
     func showTimerFinishedModalWithData(_ modalData: SimpleModalViewData) {
